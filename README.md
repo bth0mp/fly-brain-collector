@@ -30,7 +30,12 @@ authenticity, so replicas can slip through. Check every item and seller yourself
 - The [Claude desktop app](https://claude.com/download) (Code tab) to do the browsing. Each search uses your Claude usage.
 - Windows is what this was built and run on. The code has macOS/Linux branches for file locking and background launch, but they are untested.
 
-## Setup
+## Quick start
+
+You can download the zip from the [Releases page](https://github.com/bth0mp/fly-brain-collector/releases/latest) instead of using `git clone`.
+This runs on your own computer. It cannot run on GitHub itself: it needs about 16 GB of RAM and the Claude desktop app to do the browsing.
+
+**1. Get the code and install it** (about 10 minutes, mostly downloads)
 
 ```bash
 git clone https://github.com/bth0mp/fly-brain-collector
@@ -39,14 +44,14 @@ python -m venv venv
 venv\Scripts\activate            # macOS/Linux: source venv/bin/activate
 pip install -r requirements.txt
 python fly_collector.py setup    # fetches the brain model and connectome (~200 MB) from the authors' repo
-python fly_collector.py demo     # offline self-check, no network and no brain
+python fly_collector.py demo     # offline self-check: should end with "demo ok"
 ```
 
 For the simulation to run at a sensible speed, Brian2 needs a C++ compiler
 ([instructions](https://brian2.readthedocs.io/en/stable/introduction/install.html#requirements-for-c-code-generation)).
 Expect roughly 75 seconds per listing on a modern desktop.
 
-## Pick what the fly collects
+**2. Pick what the fly collects**
 
 ```bash
 python fly_collector.py themes
@@ -61,26 +66,62 @@ python fly_collector.py theme pokemon_cards
 | `pokemon_cards` | Single Pokemon cards | Same |
 | `fossils` | Fossils | Same |
 
+**3. Start the fly**
+
+```bash
+python fly_collector.py start
+```
+
+It runs in the background and opens a dashboard at **http://127.0.0.1:8765**. At this point the fly is awake but has nothing to
+look at: the page says "Idle - waiting for new listings".
+
+**4. Give it eyes (Claude does the browsing)**
+
+```bash
+python fly_collector.py instructions
+```
+
+This writes `collector/<theme>/browser_poll.md` with your folder paths filled in, and prints a sentence to paste into the Claude
+desktop app (Code tab, opened in this folder). That sentence asks Claude to create a scheduled task, every 3 hours, that follows
+the instructions file: read-only browsing, never logging in, bidding, buying or submitting forms, and skipping any site that blocks it.
+Click **Run now** once on the new task so its browser permissions get approved. Scheduled tasks only run while the Claude app is open,
+and each search uses your Claude usage.
+
+**5. Watch**
+
+Within a few minutes of the first search, listings appear in "Next under the lens", the brain starts running, and the cabinet fills up.
+Then leave it alone for the week. `python fly_collector.py status` prints the current lists; `python fly_collector.py stop` ends it.
+
+## What happens during a run
+
+| When | What happens |
+|---|---|
+| Every 3 hours (or when you press **Search now**) | Claude opens the theme's eBay searches and a rotating few of its other sites in a browser, and writes what it finds as small JSON files into `collector/<theme>/inbox/`. It also checks whether the fly's current picks are still for sale. |
+| Continuously | The collector picks up inbox files, throws out anything the theme's rules reject (replicas, lots, things priced too low to be real), scores the rest from their titles, and queues them best-looking first. |
+| About every 75 seconds | One listing goes through the brain: its score becomes sugar-neuron stimulation, the ~127,000-neuron model runs for four one-second trials, and MN9's firing rate becomes that listing's "want". |
+| After every judgement | All three lists are rebuilt: the best set of items that fits the budget (a knapsack over "want"), one of each kind of equipment within the equipment budget, and the top of everything for the dream list. Anything that entered or left is logged as a swap. |
+| At the deadline (the theme's `days`, 6 by default) | The collector stops. `collector/<theme>/collection.md` is the final shopping list with links. Nothing was bought. |
+
+The collector does not survive a reboot or sleep; run `start` again and it resumes with the same deadline. Each theme keeps its own
+state under `collector/<theme>/`. Delete that theme's `state.json` for a fresh run.
+
+## Make your own theme
+
 A theme is one JSON file in `themes/`: budgets, the scoring rules (regexes for what identifies an item, a fame table, certification,
 prestige tiers, words that reject a listing, and "too cheap to be real" rules), equipment categories, eBay searches, other sites to
 visit, and a few example titles that `demo` checks. Copy one, edit it, and run `python fly_collector.py demo` to validate it.
-Add your own dealer sites to the theme's `sites` list; tags are `[auction]`, `[dream]` (no price cap) and `[supply]` (equipment).
+Add your own dealer sites to the theme's `sites` list; tags are `[auction]` (watchlist only, never in the budget), `[dream]`
+(no price cap) and `[supply]` (equipment). After changing a theme, run `instructions` again so Claude's instructions match.
 
-## Run it
+## Troubleshooting
 
-```bash
-python fly_collector.py instructions   # writes the browser-poll instructions with your paths, prints what to tell Claude
-python fly_collector.py start          # background process + dashboard at http://127.0.0.1:8765
-python fly_collector.py status
-python fly_collector.py stop
-```
-
-`instructions` prints a sentence to paste into Claude that creates a scheduled task (every 3 hours) which follows the generated
-`browser_poll.md`: read-only browsing, never logging in, bidding, buying or submitting forms, and skipping any site that blocks it.
-Click **Run now** once on that task so its browser permissions are approved. Scheduled tasks only run while the Claude app is open.
-
-The collector does not survive a reboot or sleep; run `start` again and it resumes with the same deadline. Each theme keeps its own
-state under `collector/<theme>/`, and a run lasts the theme's `days` (6 by default). Delete that theme's `state.json` for a fresh run.
+- **"brain model not found"**: run `python fly_collector.py setup`.
+- **Dashboard says COLLECTOR OFFLINE**: the background process is not running (reboot, sleep, or `stop`). Run `start` again.
+- **Nothing ever appears in the queue**: the browser poll is not running. Check the scheduled task exists in the Claude app, that the app is open, and that you clicked Run now once. Its summary says what it visited and skipped.
+- **Each listing takes many minutes**: Brian2 has no C++ compiler and is running in slow mode; see the link in step 1.
+- **Out of memory**: lower `N_PROC` near the top of `fly_collector.py` (each worker needs about 3 GB).
+- **An obvious replica got picked**: add a word to the theme's `exclude` rule or a `too_cheap` rule, then stop and start. Rejected listings are dropped on restart.
+- **eBay shows a security page**: the poll skips eBay for that run by design. Do not work around it.
 
 ## The dashboard
 
