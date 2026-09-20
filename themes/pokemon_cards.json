@@ -1,0 +1,181 @@
+{
+ "name": "Pokemon cards",
+ "item": "card",
+ "items": "cards",
+ "title": "DROSOPHILA, I CHOOSE YOU",
+ "subtitle": "one fruit fly brain, six days, $500 of cards, $500 of kit, and a dream list",
+ "budget": 500,
+ "equip_budget": 500,
+ "dream_n": 12,
+ "days": 6,
+ "rubric": {
+  "weights": {
+   "id": 0.45,
+   "fame": 0.25,
+   "cert": 0.15,
+   "prestige": 0.15
+  },
+  "identify": {
+   "pokemon": "@fame",
+   "card number": "\\b\\d{1,3}/\\d{2,3}\\b|\\b(swsh|sm|xy|bw|svp?)\\s?\\d{2,3}\\b",
+   "set": "\\b(base set|jungle|fossil|team rocket|gym (heroes|challenge)|neo (genesis|discovery|revelation|destiny)|legendary collection|expedition|aquapolis|skyridge|ex \\w+|diamond (&|and) pearl|platinum|heartgold|black (&|and) white|evolutions|hidden fates|shining fates|champion\\'?s path|evolving skies|fusion strike|brilliant stars|lost origin|silver tempest|crown zenith|scarlet (&|and) violet|151|paldea\\w*|obsidian flames|celebrations)\\b",
+   "rarity": "\\b(holo|reverse holo|full art|alt(ernate)? art|secret rare|rainbow|gold star|shining|crystal|illustration rare|vmax|vstar|\\bex\\b|\\bgx\\b)\\b",
+   "grade": "\\b(psa|bgs|cgc|sgc)\\s?\\d{1,2}(\\.5)?\\b|\\b(near mint|nm|mint|lightly played|lp)\\b"
+  },
+  "fame": {
+   "charizard": 1.0,
+   "umbreon": 0.9,
+   "lugia": 0.9,
+   "pikachu": 0.8,
+   "mewtwo": 0.8,
+   "mew": 0.8,
+   "rayquaza": 0.8,
+   "blastoise": 0.8,
+   "venusaur": 0.7,
+   "gengar": 0.7,
+   "espeon": 0.7,
+   "sylveon": 0.6,
+   "eevee": 0.6,
+   "dragonite": 0.6,
+   "gyarados": 0.6,
+   "snorlax": 0.5,
+   "alakazam": 0.5,
+   "ho-oh": 0.7,
+   "celebi": 0.5,
+   "giratina": 0.7,
+   "greninja": 0.6,
+   "lucario": 0.5,
+   "garchomp": 0.5,
+   "tyranitar": 0.6,
+   "articuno": 0.5,
+   "zapdos": 0.5,
+   "moltres": 0.5,
+   "raichu": 0.4,
+   "jolteon": 0.5,
+   "vaporeon": 0.5,
+   "flareon": 0.5,
+   "leafeon": 0.5,
+   "glaceon": 0.5
+  },
+  "fame_default": 0.15,
+  "cert": "\\b(psa|bgs|cgc|sgc|beckett)\\b",
+  "prestige": [
+   [
+    "1st edition|first edition|shadowless|gold star|alt(ernate)? art|secret rare|crystal|shining",
+    1.0
+   ],
+   [
+    "holo|full art|illustration rare|rainbow",
+    0.6
+   ]
+  ],
+  "prestige_default": 0.2,
+  "exclude": "proxy|custom|fan ?made|orica|replica|\\bfake\\b|reprint|digital|code card|online code|ptcgo|ptcgl|\\blots?\\b|bundle|bulk|mystery|repack|booster|\\bbox\\b|\\btin\\b|\\betb\\b|elite trainer|\\bpacks?\\b|sleeves|binder|playmat|sticker|coin\\b|jumbo|oversized|metal card|gold metal|you pick|you choose|choose your",
+  "too_cheap": [
+   {
+    "match": "(1st edition|first edition|shadowless).*charizard|charizard.*(1st edition|first edition|shadowless)",
+    "below": 150
+   },
+   {
+    "match": "psa\\s?10",
+    "below": 15
+   }
+  ]
+ },
+ "equipment": {
+  "exclude": "kitchen|jewel|postal|luggage|bathroom|body|proxy|booster",
+  "priority": [
+   "sleeves",
+   "toploaders",
+   "binder",
+   "box",
+   "onetouch",
+   "display",
+   "loupe"
+  ],
+  "kinds": {
+   "onetouch": {
+    "match": "one[- ]?touch|magnetic (card )?holder",
+    "good": "35 ?pt|uv|ultra pro|magnetic|pack",
+    "typical": 20
+   },
+   "display": {
+    "match": "\\b(display|stand|frame)\\b",
+    "good": "acrylic|graded|slab|psa|wall|uv",
+    "typical": 30
+   },
+   "loupe": {
+    "match": "\\b(loupe|magnifier|magnifying)\\b",
+    "good": "10x|triplet|glass|led|achromatic|bausch|belomo",
+    "typical": 25
+   },
+   "binder": {
+    "match": "\\b(binder|album|portfolio)\\b",
+    "good": "side[- ]?load\\w*|zip\\w*|9[- ]?pocket|12[- ]?pocket|vault x|ultra pro|acid[- ]?free",
+    "typical": 35
+   },
+   "toploaders": {
+    "match": "top ?loaders?|card savers?|semi[- ]?rigid",
+    "good": "35 ?pt|ultra pro|bcw|card saver|pack|clear",
+    "typical": 15,
+    "by_quantity": true
+   },
+   "box": {
+    "match": "\\b(storage box|deck box|card box|boxes|case)\\b",
+    "good": "bcw|800|1600|3200|graded|slab|ultra pro|cardboard",
+    "typical": 25
+   },
+   "sleeves": {
+    "match": "\\bsleeves?\\b",
+    "good": "penny|perfect fit|dragon shield|ultra pro|kmc|acid[- ]?free|pvc[- ]?free|matte",
+    "typical": 10,
+    "by_quantity": true
+   }
+  }
+ },
+ "searches": {
+  "items": [
+   "https://www.ebay.com/sch/i.html?_nkw=pokemon+card+holo+psa&LH_BIN=1&_sop=10&_udhi=200&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=pokemon+card+alt+art+near+mint&LH_BIN=1&_sop=10&_udhi=150&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=pokemon+wotc+holo+near+mint&LH_BIN=1&_sop=10&_udhi=150&_ipg=120&fly=item"
+  ],
+  "dream": [
+   "https://www.ebay.com/sch/i.html?_nkw=charizard+1st+edition+base+set+psa&LH_BIN=1&_sop=10&_ipg=60&fly=dream",
+   "https://www.ebay.com/sch/i.html?_nkw=umbreon+vmax+alt+art+psa+10&LH_BIN=1&_sop=10&_ipg=60&fly=dream"
+  ],
+  "equipment": [
+   "https://www.ebay.com/sch/i.html?_nkw=penny+sleeves+trading+cards+1000&LH_BIN=1&_sop=12&_udhi=30&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=toploaders+35pt+100+pack&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=side+loading+12+pocket+zip+binder&LH_BIN=1&_sop=12&_udhi=60&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=bcw+card+storage+box+1600&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=magnetic+one+touch+35pt+10+pack&LH_BIN=1&_sop=12&_udhi=50&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=graded+card+display+stand+acrylic&LH_BIN=1&_sop=12&_udhi=60&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=10x+triplet+loupe&LH_BIN=1&_sop=12&_udhi=80&_ipg=60&fly=supply"
+  ]
+ },
+ "sites": [
+  "https://www.tcgplayer.com/  # Pokemon singles",
+  "https://www.trollandtoad.com/  # Pokemon singles"
+ ],
+ "poll_notes": "Collect up to 25 single, fixed-price Pokemon cards of about $200 or less per site. Keep the Pokemon name, set, card number, rarity and grade/condition in the title. Skip sealed product, lots, bulk, proxies, custom and oversized cards.",
+ "examples": {
+  "good": "Charizard 4/102 Base Set Holo Shadowless PSA 8",
+  "plain": "Pokemon card",
+  "reject": [
+   "Charizard 1st edition PROXY custom card",
+   "Pokemon booster box Evolving Skies sealed",
+   "Lot of 100 pokemon cards bulk"
+  ],
+  "too_cheap": [
+   [
+    "Charizard 4/102 Base Set 1st Edition Holo",
+    24.99
+   ]
+  ],
+  "equipment": {
+   "1000 penny sleeves Ultra Pro": "sleeves",
+   "100 pack toploaders 35pt BCW": "toploaders",
+   "Vault X 12 pocket zip binder side loading": "binder"
+  }
+ }
+}

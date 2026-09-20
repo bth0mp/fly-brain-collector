@@ -1,0 +1,9 @@
+# the brain model is fetched by `python fly_collector.py setup`, never committed
+model/
+# your run: state, logs, shopping lists
+collector/
+config.json
+venv/
+.venv/
+__pycache__/
+*.pyc

@@ -1,0 +1,243 @@
+{
+ "name": "Ancient Roman & Greek coins",
+ "item": "coin",
+ "items": "coins",
+ "title": "MVSCA",
+ "subtitle": "one fruit fly brain, six days, $500 of coins, $500 of kit, and a dream list with no limit",
+ "budget": 500,
+ "equip_budget": 500,
+ "dream_n": 12,
+ "days": 6,
+ "rubric": {
+  "weights": {
+   "id": 0.45,
+   "fame": 0.25,
+   "cert": 0.15,
+   "prestige": 0.15
+  },
+  "identify": {
+   "ruler": "@fame",
+   "mint": "\\b(antioch|alexandria|rome|nicomedia|cyzicus|siscia|thessalonica|heraclea|constantinople|trier|arles|lugdunum|aquileia|ticinum|sirmium|londinium|carthage|ostia|serdica|petra|jerusalem|kyrene|ptolemais|amphipolis|pella|babylon|sardes|ephesus|tarsus|tyre|sidon|kyme|amisos)\\b",
+   "date": "\\b\\d{1,4}\\s*(bc|bce|ad|ce)\\b|\\b(ad|bc)\\s*\\d{1,4}\\b",
+   "denomination": "\\b(denarius|antoninianus|follis|sestertius|dupondius|aureus|solidus|siliqua|centenionalis|nummus|aurelianus|quadrans|quinarius|majorina|drachm|tetradrachm|didrachm|hemidrachm|obol|stater|prutah|lepton|dichalkon|chalkous|litra|ae\\s?\\d{0,2})\\b",
+   "reverse type": "\\b(victory|nike|zeus|jupiter|apollo|athena|sol invictus|campgate|horseman|wolf|eagle|gloria|vot|wreath|securitas|salus|pietas|concordia|mars|hercules|herakles|tyche|fortuna|felicitas|virtus|providentia|restitutor|restorer|christogram|chi-rho|club|tripod|anchor|cornucopia\\w*|elephant|dolphin|horse|owl|pegasus|lion|bull|soldiers?|standard|busts?)\\b"
+  },
+  "fame": {
+   "alexander the great": 1.0,
+   "alexander iii": 1.0,
+   "julius caesar": 1.0,
+   "cleopatra": 1.0,
+   "augustus": 0.9,
+   "marcus aurelius": 0.9,
+   "caligula": 0.9,
+   "pontius pilate": 0.9,
+   "nero": 0.8,
+   "hadrian": 0.8,
+   "trajan": 0.8,
+   "tiberius": 0.8,
+   "athens": 0.8,
+   "constantine": 0.7,
+   "claudius": 0.7,
+   "vespasian": 0.7,
+   "titus": 0.7,
+   "commodus": 0.7,
+   "philip ii": 0.7,
+   "herod": 0.7,
+   "domitian": 0.6,
+   "septimius severus": 0.6,
+   "caracalla": 0.6,
+   "ptolemy": 0.6,
+   "diocletian": 0.6,
+   "aurelian": 0.6,
+   "julian": 0.6,
+   "antoninus pius": 0.6,
+   "antiochos": 0.6,
+   "antiochus": 0.6,
+   "probus": 0.5,
+   "constantius": 0.5,
+   "theodosius": 0.5,
+   "maxentius": 0.5,
+   "faustina": 0.5,
+   "helena": 0.5,
+   "seleukos": 0.5,
+   "seleucus": 0.5,
+   "lysimachos": 0.5,
+   "jannaeus": 0.5,
+   "macedon": 0.5,
+   "syracuse": 0.5,
+   "elagabalus": 0.5,
+   "gallienus": 0.4,
+   "constans": 0.4,
+   "licinius": 0.4,
+   "valens": 0.4,
+   "valentinian": 0.4,
+   "crispus": 0.4,
+   "maximian": 0.4,
+   "gordian": 0.4,
+   "severus alexander": 0.4,
+   "claudius gothicus": 0.4,
+   "postumus": 0.4,
+   "magnentius": 0.4,
+   "gratian": 0.4,
+   "fausta": 0.4,
+   "philip i": 0.4,
+   "nabataean": 0.35,
+   "aretas": 0.35,
+   "arcadius": 0.3,
+   "honorius": 0.3,
+   "tetricus": 0.3,
+   "victorinus": 0.3,
+   "rabbel": 0.3,
+   "malichos": 0.3,
+   "pergamon": 0.3,
+   "thessaly": 0.3,
+   "hasmonean": 0.4,
+   "seleucid": 0.4,
+   "seleukid": 0.4
+  },
+  "fame_default": 0.1,
+  "cert": "\\b(ngc|pcgs|icg|anacs|slab\\w*|coa|certificate|certified)\\b",
+  "prestige": [
+   [
+    "\\b(gold|aureus|solidus|av stater|dekadrachm|decadrachm|el stater)\\b",
+    1.0
+   ],
+   [
+    "\\b(silver|ar|denarius|tetradrachm|drachm|didrachm|hemidrachm|siliqua|stater|antoninianus)\\b",
+    0.6
+   ]
+  ],
+  "prestige_default": 0.2,
+  "exclude": "not authentic|plated|cuff ?links?|coin pack|replica|\\bcopy\\b|reproduction|\\bfake|souvenir|token|restrike|fantasy|novelty|\\blots?\\b|\\bcoins\\b|\\bpcs\\b|random|per order|you choose|you pick|uncleaned|arrowhead|\\bring\\b|pendant|necklace|jewelry|\\bbook\\b|medieval|byzantine",
+  "too_cheap": [
+   {
+    "match": "\\b(dekadrachm|decadrachm)\\b",
+    "below": 500
+   },
+   {
+    "match": "\\b(gold|aureus)\\b",
+    "unless": "weight",
+    "below": 250
+   },
+   {
+    "match": "tetradrachm",
+    "unless": "billon|\\bbi\\b|potin|alexandria|egypt",
+    "below": 50
+   }
+  ]
+ },
+ "equipment": {
+  "exclude": "casino|poker|challenge coin|kitchen|jewel|postal|luggage|bathroom|body|\\bslabs?\\b",
+  "priority": [
+   "holders",
+   "box",
+   "loupe",
+   "scale",
+   "caliper",
+   "gloves",
+   "tray",
+   "book",
+   "cabinet"
+  ],
+  "kinds": {
+   "cabinet": {
+    "match": "\\bcabinet\\b",
+    "good": "wood\\w*|mahogany|oak|walnut|trays|drawers|handmade",
+    "typical": 300
+   },
+   "book": {
+    "match": "\\b(book|handbook|guide|catalogu?e?|sear|ric)\\b",
+    "good": "sear|values|handbook|identif\\w+|roman|greek|ancient|van meter|klawans",
+    "typical": 40
+   },
+   "loupe": {
+    "match": "\\b(loupe|magnifier|magnifying)\\b",
+    "good": "10x|triplet|glass|led|achromatic|bausch|belomo",
+    "typical": 25
+   },
+   "gloves": {
+    "match": "\\bgloves\\b",
+    "good": "cotton|lint|pairs?|inspection|nitrile",
+    "typical": 10
+   },
+   "scale": {
+    "match": "\\bscales?\\b",
+    "good": "0\\.01\\s?g|0\\.001|milligram|calibrat\\w+|digital",
+    "typical": 20
+   },
+   "caliper": {
+    "match": "\\bcalipers?\\b",
+    "good": "digital|plastic|carbon|0\\.01|stainless",
+    "typical": 20
+   },
+   "tray": {
+    "match": "\\b(trays?|display case|presentation case|album|binder)\\b",
+    "good": "velvet|felt|lighthouse|leuchtturm|wood\\w*|alumini?um|compartments?",
+    "typical": 35
+   },
+   "box": {
+    "match": "\\b(box|boxes)\\b",
+    "good": "single row|double row|2x2|guardhouse|whitman|lighthouse",
+    "typical": 25,
+    "reject": "silver eagle|morgan|quarter|dime|penn(y|ies)|nick|dollar|kennedy|\\bcents?\\b|\\d\\s?mm"
+   },
+   "holders": {
+    "match": "\\b(capsules?|flips?|saflips?|holders?)\\b",
+    "good": "pvc[- ]?free|archival|mylar|saflip|assorted|double pocket",
+    "typical": 20,
+    "by_quantity": true,
+    "reject": "silver eagle|morgan|quarter|dime|penn(y|ies)|nick|dollar|kennedy|\\bcents?\\b|\\d\\s?mm"
+   }
+  }
+ },
+ "searches": {
+  "items": [
+   "https://www.ebay.com/sch/i.html?_nkw=ancient+roman+coin&LH_BIN=1&_sop=10&_udhi=150&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=ancient+greek+coin&LH_BIN=1&_sop=10&_udhi=150&_ipg=120&fly=item"
+  ],
+  "dream": [
+   "https://www.ebay.com/sch/i.html?_nkw=ancient+roman+gold+aureus+coin&LH_BIN=1&_sop=10&_ipg=60&fly=dream",
+   "https://www.ebay.com/sch/i.html?_nkw=ancient+greek+silver+tetradrachm+coin&LH_BIN=1&_sop=10&_ipg=60&fly=dream"
+  ],
+  "equipment": [
+   "https://www.ebay.com/sch/i.html?_nkw=coin+flips+2x2+pvc+free&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=coin+storage+box+2x2&LH_BIN=1&_sop=12&_udhi=60&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=10x+triplet+loupe+coin&LH_BIN=1&_sop=12&_udhi=80&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=digital+pocket+scale+0.01g&LH_BIN=1&_sop=12&_udhi=50&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=digital+caliper+plastic+coin&LH_BIN=1&_sop=12&_udhi=50&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=cotton+gloves+coin+handling&LH_BIN=1&_sop=12&_udhi=25&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=coin+tray+velvet+display+case&LH_BIN=1&_sop=12&_udhi=120&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=sear+roman+coins+and+their+values+book&LH_BIN=1&_sop=12&_udhi=120&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=wooden+coin+cabinet+trays&LH_BIN=1&_sop=12&_udhi=450&_ipg=60&fly=supply"
+  ]
+ },
+ "sites": [
+  "https://www.vcoins.com/  # ancient coins section",
+  "https://www.forumancientcoins.com/",
+  "https://www.ma-shops.com/  # search ancient Roman / Greek",
+  "https://www.biddr.com/ [auction]",
+  "https://www.numisbids.com/ [auction]",
+  "https://cngcoins.com/ [dream]"
+ ],
+ "poll_notes": "Collect up to 25 single, fixed-price ancient Roman or Greek coins of about $150 or less per site. Keep the title as the dealer wrote it (ruler, mint, date, denomination and reverse type all matter). Skip lots, uncleaned coins, replicas, Byzantine/medieval/modern, jewelry and books.",
+ "examples": {
+  "good": "Alexander the Great Coin AE17 Macedon Bow & Club 336-323 BC Authentic Ancient NGC",
+  "plain": "Authentic Roman Bronze Coin",
+  "reject": [
+   "Ancient Greek Coin Drachm Pamphylia NOT AUTHENTIC",
+   "1 Original ancient Roman coin Random from lot",
+   "Ancient Roman Marcus Aurelius Aureus 168 AD Rome Gold Plated Coin Cufflinks"
+  ],
+  "too_cheap": [
+   [
+    "305-295 BC Ancient Greek Coin Head of Alexander The Great - Dekadrachm 26mm",
+    32.17
+   ]
+  ],
+  "equipment": {
+   "100 Saflip 2x2 PVC free coin flips archival": "holders",
+   "10x Triplet Loupe glass": "loupe",
+   "Mahogany coin cabinet 10 trays": "cabinet"
+  }
+ }
+}

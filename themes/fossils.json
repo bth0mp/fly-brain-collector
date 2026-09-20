@@ -1,0 +1,194 @@
+{
+ "name": "Fossils",
+ "item": "fossil",
+ "items": "fossils",
+ "title": "MVSCA IN SVCINO",
+ "subtitle": "one fruit fly brain, six days, $500 of deep time, $500 of kit, and a dream list",
+ "budget": 500,
+ "equip_budget": 500,
+ "dream_n": 12,
+ "days": 6,
+ "rubric": {
+  "weights": {
+   "id": 0.45,
+   "fame": 0.25,
+   "cert": 0.15,
+   "prestige": 0.15
+  },
+  "identify": {
+   "animal": "@fame",
+   "locality": "\\b(morocco|madagascar|utah|wyoming|green river|solnhofen|hell creek|kem kem|south dakota|montana|texas|florida|england|lyme regis|germany|holzmaden|russia|china|liaoning|lebanon|indonesia|peru|chile|oklahoma|new york|ohio|bolivia|baltic|dominican|burm\\w+|myanmar)\\b",
+   "age": "\\b(cambrian|ordovician|silurian|devonian|carboniferous|permian|triassic|jurassic|cretaceous|paleocene|eocene|oligocene|miocene|pliocene|pleistocene)\\b|\\b\\d+\\s?(million|myo|mya)\\b",
+   "size": "\\b\\d+(\\.\\d+)?\\s?(\"|in\\b|inch(es)?|cm|mm)",
+   "condition": "\\b(no repair|no restoration|unrestored|natural|complete|museum|prepared|authentic|genuine|rooted|serrations?)\\b"
+  },
+  "fame": {
+   "tyrannosaurus": 1.0,
+   "t-rex": 1.0,
+   "t. rex": 1.0,
+   "triceratops": 0.9,
+   "megalodon": 0.9,
+   "mammoth": 0.8,
+   "spinosaurus": 0.8,
+   "meteorite": 0.8,
+   "carcharodontosaurus": 0.8,
+   "raptor": 0.7,
+   "mosasaur": 0.7,
+   "ichthyosaur": 0.7,
+   "plesiosaur": 0.7,
+   "pterosaur": 0.8,
+   "allosaurus": 0.9,
+   "dinosaur": 0.6,
+   "amber": 0.6,
+   "trilobite": 0.6,
+   "ammonite": 0.5,
+   "cave bear": 0.6,
+   "saber": 0.9,
+   "smilodon": 0.9,
+   "crinoid": 0.4,
+   "sea urchin": 0.3,
+   "orthoceras": 0.3,
+   "knightia": 0.4,
+   "diplomystus": 0.5,
+   "fish": 0.3,
+   "shark": 0.4,
+   "fern": 0.3,
+   "petrified wood": 0.3,
+   "coprolite": 0.3,
+   "eurypterid": 0.8,
+   "sea scorpion": 0.8,
+   "keichousaurus": 0.7,
+   "crocodile": 0.5,
+   "turtle": 0.5,
+   "insect": 0.5
+  },
+  "fame_default": 0.15,
+  "cert": "\\b(coa|certificate|provenance|documented)\\b",
+  "prestige": [
+   [
+    "museum|tyrannosaur\\w*|t-?rex|skull|articulated|complete skeleton|pathological|insect in amber|inclusion",
+    1.0
+   ],
+   [
+    "pyriti[sz]ed|opali[sz]ed|iridescent|rooted|complete|spiny|enrolled",
+    0.6
+   ]
+  ],
+  "prestige_default": 0.25,
+  "exclude": "replica|\\bcast\\b|resin|reproduction|\\bmodel\\b|\\btoy\\b|\\bfake\\b|3d print\\w*|\\blots?\\b|bulk|tumbled|\\bkit\\b|dig kit|\\bpcs\\b|pieces|fragments?|chunks?|wholesale|you pick|random|mystery|pendant|necklace|ring|earrings|jewelry|bead|carved|carving|soap|sticker|poster|book",
+  "too_cheap": [
+   {
+    "match": "tyrannosaur\\w*|t-?rex|t\\. rex",
+    "unless": "fragment|partial|chunk",
+    "below": 200
+   },
+   {
+    "match": "megalodon",
+    "unless": "fragment|partial|broken|small|1\\.|2\\.",
+    "below": 25
+   }
+  ]
+ },
+ "equipment": {
+  "exclude": "kitchen|jewel|postal|luggage|bathroom|body|makeup|nail",
+  "priority": [
+   "stands",
+   "case",
+   "box",
+   "loupe",
+   "brushes",
+   "uvlight",
+   "book",
+   "cabinet"
+  ],
+  "kinds": {
+   "cabinet": {
+    "match": "\\bcabinet\\b|specimen chest",
+    "good": "wood\\w*|drawers|specimen|glass|display",
+    "typical": 250
+   },
+   "book": {
+    "match": "\\b(book|guide|handbook)\\b",
+    "good": "fossils?|field guide|paleontolog\\w+|identification|smithsonian|audubon",
+    "typical": 25
+   },
+   "uvlight": {
+    "match": "\\b(uv|ultraviolet|blacklight|black light)\\b",
+    "good": "365 ?nm|led|flashlight|mineral|amber",
+    "typical": 20
+   },
+   "brushes": {
+    "match": "\\b(brush(es)?|dental picks?|pick set|scribe|prep tools?)\\b",
+    "good": "soft|set|stainless|fossil|preparation|fine",
+    "typical": 15
+   },
+   "loupe": {
+    "match": "\\b(loupe|magnifier|magnifying)\\b",
+    "good": "10x|triplet|glass|led|achromatic|bausch|belomo",
+    "typical": 25
+   },
+   "case": {
+    "match": "riker|display case|shadow box|glass dome",
+    "good": "riker|glass|8x12|12x16|wood\\w*|foam|locking",
+    "typical": 30
+   },
+   "stands": {
+    "match": "\\b(stands?|easels?|holders?)\\b",
+    "good": "acrylic|metal|adjustable|display|mineral|specimen|three[- ]?peg|tripod",
+    "typical": 20,
+    "by_quantity": true
+   },
+   "box": {
+    "match": "\\b(box|boxes)\\b",
+    "good": "specimen|gem jar|compartments?|foam|perky|fold[- ]?up|cardboard|flats?",
+    "typical": 25
+   }
+  }
+ },
+ "searches": {
+  "items": [
+   "https://www.ebay.com/sch/i.html?_nkw=trilobite+fossil+morocco+authentic&LH_BIN=1&_sop=10&_udhi=150&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=megalodon+tooth+authentic+inches&LH_BIN=1&_sop=10&_udhi=200&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=ammonite+fossil+madagascar&LH_BIN=1&_sop=10&_udhi=100&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=dinosaur+tooth+fossil+kem+kem&LH_BIN=1&_sop=10&_udhi=150&_ipg=120&fly=item"
+  ],
+  "dream": [
+   "https://www.ebay.com/sch/i.html?_nkw=tyrannosaurus+rex+tooth+hell+creek&LH_BIN=1&_sop=10&_ipg=60&fly=dream",
+   "https://www.ebay.com/sch/i.html?_nkw=megalodon+tooth+6+inch+no+restoration&LH_BIN=1&_sop=10&_ipg=60&fly=dream"
+  ],
+  "equipment": [
+   "https://www.ebay.com/sch/i.html?_nkw=acrylic+display+stands+mineral+specimen&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=riker+mount+display+case+8x12&LH_BIN=1&_sop=12&_udhi=60&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=specimen+boxes+perky+fold+up&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=10x+triplet+loupe&LH_BIN=1&_sop=12&_udhi=80&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=fossil+preparation+tools+brush+set&LH_BIN=1&_sop=12&_udhi=50&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=uv+flashlight+365nm+mineral&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=fossil+field+guide+book&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=specimen+cabinet+drawers+wood&LH_BIN=1&_sop=12&_udhi=450&_ipg=60&fly=supply"
+  ]
+ },
+ "sites": [
+  "https://www.fossilera.com/"
+ ],
+ "poll_notes": "Collect up to 25 single, fixed-price fossils of about $200 or less per site. Keep the animal, locality, geological age, size and any repair/restoration note in the title. Skip replicas and casts, lots, fragments, jewelry, carvings and dig kits.",
+ "examples": {
+  "good": "4.2\" Megalodon Tooth Miocene South Carolina no restoration serrations COA",
+  "plain": "Old rock with a shell in it",
+  "reject": [
+   "T-Rex tooth REPLICA resin cast",
+   "Lot of 20 small shark teeth",
+   "Ammonite pendant necklace"
+  ],
+  "too_cheap": [
+   [
+    "Tyrannosaurus Rex Tooth Hell Creek 2.5 inch",
+    39.0
+   ]
+  ],
+  "equipment": {
+   "10 acrylic display stands three peg": "stands",
+   "Riker mount display case 8x12 glass": "case",
+   "Fossil field guide book Smithsonian": "book"
+  }
+ }
+}

@@ -1,0 +1,184 @@
+{
+ "name": "Classic US coins",
+ "item": "coin",
+ "items": "coins",
+ "title": "E PLVRIBVS MVSCA",
+ "subtitle": "one fruit fly brain, six days, $500 of American silver and copper, $500 of kit, and a dream list",
+ "budget": 500,
+ "equip_budget": 500,
+ "dream_n": 12,
+ "days": 6,
+ "rubric": {
+  "weights": {
+   "id": 0.45,
+   "fame": 0.25,
+   "cert": 0.15,
+   "prestige": 0.15
+  },
+  "identify": {
+   "series": "@fame",
+   "date": "\\b1[789]\\d\\d\\b",
+   "mint mark": "\\b1[789]\\d\\d[- ]?(cc|s|d|o)\\b|\\b(carson city|san francisco|new orleans|denver)\\b",
+   "grade": "\\b(ms|au|xf|ef|vf|pr|pf)[- ]?\\d{2}\\b|\\b(uncirculated|about uncirculated|extremely fine|very fine)\\b",
+   "designation": "\\b(dmpl|pl|proof ?like|fb|fbl|fs|full steps|full bands|rd|rb|cameo|dcam|toned|vam)\\b"
+  },
+  "fame": {
+   "saint-gaudens": 1.0,
+   "st gaudens": 1.0,
+   "1909-s vdb": 1.0,
+   "1916-d": 1.0,
+   "carson city": 0.9,
+   "flowing hair": 1.0,
+   "draped bust": 0.9,
+   "capped bust": 0.8,
+   "trade dollar": 0.7,
+   "flying eagle": 0.7,
+   "morgan": 0.7,
+   "seated liberty": 0.6,
+   "peace dollar": 0.6,
+   "walking liberty": 0.6,
+   "standing liberty": 0.6,
+   "buffalo": 0.5,
+   "mercury": 0.5,
+   "indian head": 0.5,
+   "large cent": 0.6,
+   "half cent": 0.6,
+   "two cent": 0.5,
+   "three cent": 0.5,
+   "shield nickel": 0.4,
+   "liberty nickel": 0.4,
+   "barber": 0.4,
+   "franklin": 0.3,
+   "wheat": 0.3,
+   "lincoln": 0.3
+  },
+  "fame_default": 0.1,
+  "cert": "\\b(pcgs|ngc|cac|anacs|icg)\\b",
+  "prestige": [
+   [
+    "\\b(gold|double eagle|half eagle|quarter eagle)\\b",
+    1.0
+   ],
+   [
+    "\\b(silver|dollar|half dollar)\\b",
+    0.6
+   ]
+  ],
+  "prestige_default": 0.2,
+  "exclude": "replica|\\bcopy\\b|tribute|plated|layered|coloriz\\w+|novelty|fantasy|restrike|\\blots?\\b|\\brolls?\\b|\\bbags?\\b|\\bcoins\\b|\\bpcs\\b|random|mystery|you pick|you choose|cull|hole[sd]?\\b|pendant|ring|necklace|jewelry|\\bset\\b|commemorative|bullion|\\boz\\b",
+  "too_cheap": [
+   {
+    "match": "\\b(gold|double eagle|half eagle|quarter eagle)\\b",
+    "unless": "gold(en)? ton",
+    "below": 150
+   },
+   {
+    "match": "carson city|1909-s vdb|1916-d",
+    "below": 60
+   }
+  ]
+ },
+ "equipment": {
+  "exclude": "casino|poker|challenge coin|kitchen|jewel|postal|luggage|bathroom|body",
+  "priority": [
+   "holders",
+   "box",
+   "album",
+   "loupe",
+   "scale",
+   "gloves",
+   "book",
+   "cabinet"
+  ],
+  "kinds": {
+   "cabinet": {
+    "match": "\\bcabinet\\b|\\bchest\\b",
+    "good": "wood\\w*|mahogany|oak|walnut|trays|drawers",
+    "typical": 250
+   },
+   "book": {
+    "match": "\\b(book|guide|red book|catalog)\\b",
+    "good": "red book|guide book|united states|yeoman|whitman|cherrypickers|grading",
+    "typical": 25
+   },
+   "loupe": {
+    "match": "\\b(loupe|magnifier|magnifying)\\b",
+    "good": "10x|triplet|glass|led|achromatic|bausch|belomo",
+    "typical": 25
+   },
+   "gloves": {
+    "match": "\\bgloves\\b",
+    "good": "cotton|lint|pairs?|inspection|nitrile",
+    "typical": 10
+   },
+   "scale": {
+    "match": "\\bscales?\\b",
+    "good": "0\\.01\\s?g|0\\.001|calibrat\\w+|digital",
+    "typical": 20
+   },
+   "album": {
+    "match": "\\b(album|folder|binder)\\b",
+    "good": "dansco|whitman|littleton|slipcase|archival",
+    "typical": 40
+   },
+   "box": {
+    "match": "\\b(box|boxes)\\b",
+    "good": "single row|double row|2x2|slab|guardhouse|whitman|lighthouse",
+    "typical": 25
+   },
+   "holders": {
+    "match": "\\b(capsules?|flips?|saflips?|holders?|air-?tites?)\\b",
+    "good": "pvc[- ]?free|archival|mylar|air-?tite|direct fit|assorted",
+    "typical": 20,
+    "by_quantity": true
+   }
+  }
+ },
+ "searches": {
+  "items": [
+   "https://www.ebay.com/sch/i.html?_nkw=morgan+silver+dollar+pcgs&LH_BIN=1&_sop=10&_udhi=200&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=us+type+coin+1800s+ngc&LH_BIN=1&_sop=10&_udhi=200&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=walking+liberty+half+dollar+au&LH_BIN=1&_sop=10&_udhi=150&_ipg=120&fly=item"
+  ],
+  "dream": [
+   "https://www.ebay.com/sch/i.html?_nkw=saint+gaudens+double+eagle+pcgs&LH_BIN=1&_sop=10&_ipg=60&fly=dream",
+   "https://www.ebay.com/sch/i.html?_nkw=carson+city+morgan+dollar+ms65&LH_BIN=1&_sop=10&_ipg=60&fly=dream"
+  ],
+  "equipment": [
+   "https://www.ebay.com/sch/i.html?_nkw=air-tite+coin+capsules+assorted&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=coin+storage+box+2x2&LH_BIN=1&_sop=12&_udhi=60&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=dansco+coin+album&LH_BIN=1&_sop=12&_udhi=90&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=10x+triplet+loupe+coin&LH_BIN=1&_sop=12&_udhi=80&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=digital+pocket+scale+0.01g&LH_BIN=1&_sop=12&_udhi=50&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=cotton+gloves+coin+handling&LH_BIN=1&_sop=12&_udhi=25&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=red+book+guide+united+states+coins&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=wooden+coin+cabinet+trays&LH_BIN=1&_sop=12&_udhi=450&_ipg=60&fly=supply"
+  ]
+ },
+ "sites": [
+  "https://www.greatcollections.com/ [auction]",
+  "https://coins.ha.com/ [auction] [dream]",
+  "https://www.littletoncoin.com/shop"
+ ],
+ "poll_notes": "Collect up to 25 single, fixed-price classic US coins (pre-1965) of about $200 or less per site. Keep date, mint mark, grade and grading service in the title. Skip rolls, lots, sets, bullion, modern commemoratives, replicas and jewelry.",
+ "examples": {
+  "good": "1881-S Morgan Silver Dollar PCGS MS65 Toned",
+  "plain": "Old US coin",
+  "reject": [
+   "1893-S Morgan Dollar REPLICA copy",
+   "Roll of 20 Morgan silver dollars",
+   "24k Gold Plated 1933 Double Eagle tribute"
+  ],
+  "too_cheap": [
+   [
+    "1907 Saint-Gaudens Gold Double Eagle $20",
+    49.99
+   ]
+  ],
+  "equipment": {
+   "Air-Tite direct fit capsules 25 pack": "holders",
+   "Dansco album Morgan dollars": "album",
+   "Red Book guide United States coins 2027": "book"
+  }
+ }
+}

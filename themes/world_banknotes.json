@@ -1,0 +1,174 @@
+{
+ "name": "World banknotes",
+ "item": "note",
+ "items": "banknotes",
+ "title": "PAPYRVS",
+ "subtitle": "one fruit fly brain, six days, $500 of paper money, $500 of kit, and a dream list",
+ "budget": 500,
+ "equip_budget": 500,
+ "dream_n": 12,
+ "days": 6,
+ "rubric": {
+  "weights": {
+   "id": 0.45,
+   "fame": 0.25,
+   "cert": 0.15,
+   "prestige": 0.15
+  },
+  "identify": {
+   "type": "@fame",
+   "year": "\\b(1[6789]\\d\\d|20[0-2]\\d)\\b",
+   "catalogue number": "\\bp(ick)?[-# ]?\\d+[a-z]?\\b|\\bfr\\.? ?\\d+",
+   "denomination": "\\b\\d[\\d,.]*\\s?(dollars?|pounds?|francs?|marks?|pesos?|rubles?|roubles?|yen|yuan|rupees?|dinars?|lir[ae]|kron\\w+|shillings?|gulden|pesetas?|cents?|trillion|billion|million)\\b",
+   "grade": "\\b(unc|uncirculated|au|xf|ef|vf|gem|choice|epq|ppq)\\b|\\b(pmg|pcgs)\\s?\\d{2}\\b"
+  },
+  "fame": {
+   "educational series": 1.0,
+   "black eagle": 0.9,
+   "bison": 0.9,
+   "indian chief": 0.9,
+   "gold certificate": 0.9,
+   "silver certificate": 0.6,
+   "confederate": 0.8,
+   "fractional currency": 0.7,
+   "hawaii": 0.8,
+   "north africa": 0.7,
+   "military payment": 0.6,
+   "star note": 0.5,
+   "national bank": 0.7,
+   "obsolete": 0.5,
+   "colonial": 0.8,
+   "continental": 0.8,
+   "zimbabwe": 0.6,
+   "weimar": 0.5,
+   "reichsbanknote": 0.5,
+   "notgeld": 0.4,
+   "assignat": 0.7,
+   "specimen": 0.8,
+   "hyperinflation": 0.5,
+   "japanese invasion": 0.5,
+   "white fiver": 0.9,
+   "bank of england": 0.5,
+   "french indochina": 0.6,
+   "russia": 0.4,
+   "china": 0.4,
+   "ottoman": 0.6
+  },
+  "fame_default": 0.15,
+  "cert": "\\b(pmg|pcgs|icg|certified|graded)\\b",
+  "prestige": [
+   [
+    "large size|specimen|\\bproof\\b|educational|gold certificate|\\b1[678]\\d\\d\\b",
+    1.0
+   ],
+   [
+    "silver certificate|star note|\\bunc\\b|gem|\\b19[0-4]\\d\\b",
+    0.6
+   ]
+  ],
+  "prestige_default": 0.25,
+  "exclude": "replica|\\bcopy\\b|reproduction|novelty|gold foil|24k|plated|fantasy|souvenir|play money|prop money|movie|\\blots?\\b|bundle|\\bpcs\\b|\\bnotes\\b|random|mystery|you pick|you choose|polymer commemorative|test note|advertis\\w+",
+  "too_cheap": [
+   {
+    "match": "educational series|black eagle|gold certificate|white fiver",
+    "below": 60
+   }
+  ]
+ },
+ "equipment": {
+  "exclude": "casino|poker|challenge coin|kitchen|jewel|postal|luggage|bathroom|body",
+  "priority": [
+   "holders",
+   "album",
+   "box",
+   "loupe",
+   "uvlight",
+   "gloves",
+   "book"
+  ],
+  "kinds": {
+   "book": {
+    "match": "\\b(book|catalog(ue)?|guide)\\b",
+    "good": "standard catalog|world paper money|krause|pick|friedberg|paper money",
+    "typical": 50
+   },
+   "uvlight": {
+    "match": "\\b(uv|ultraviolet|blacklight|black light)\\b",
+    "good": "365 ?nm|led|flashlight|detector|currency",
+    "typical": 20
+   },
+   "loupe": {
+    "match": "\\b(loupe|magnifier|magnifying)\\b",
+    "good": "10x|triplet|glass|led|achromatic|bausch|belomo",
+    "typical": 25
+   },
+   "gloves": {
+    "match": "\\bgloves\\b",
+    "good": "cotton|lint|pairs?|inspection|nitrile",
+    "typical": 10
+   },
+   "album": {
+    "match": "\\b(album|binder)\\b",
+    "good": "banknote|currency|lighthouse|leuchtturm|vario|pages|archival",
+    "typical": 45
+   },
+   "box": {
+    "match": "\\b(box|boxes)\\b",
+    "good": "currency|banknote|graded|pmg|archival|storage",
+    "typical": 30
+   },
+   "holders": {
+    "match": "\\b(sleeves?|holders?|toploaders?)\\b",
+    "good": "mylar|archival|pvc[- ]?free|currency|banknote|bcw|semi-?rigid",
+    "typical": 20,
+    "by_quantity": true
+   }
+  }
+ },
+ "searches": {
+  "items": [
+   "https://www.ebay.com/sch/i.html?_nkw=world+banknote+unc+pick&LH_BIN=1&_sop=10&_udhi=100&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=us+silver+certificate+large+size&LH_BIN=1&_sop=10&_udhi=250&_ipg=120&fly=item",
+   "https://www.ebay.com/sch/i.html?_nkw=banknote+pmg+graded&LH_BIN=1&_sop=10&_udhi=150&_ipg=120&fly=item"
+  ],
+  "dream": [
+   "https://www.ebay.com/sch/i.html?_nkw=educational+series+silver+certificate+1896&LH_BIN=1&_sop=10&_ipg=60&fly=dream",
+   "https://www.ebay.com/sch/i.html?_nkw=large+size+gold+certificate+pmg&LH_BIN=1&_sop=10&_ipg=60&fly=dream"
+  ],
+  "equipment": [
+   "https://www.ebay.com/sch/i.html?_nkw=mylar+currency+sleeves+banknote&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=banknote+album+lighthouse&LH_BIN=1&_sop=12&_udhi=90&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=currency+storage+box+graded&LH_BIN=1&_sop=12&_udhi=60&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=10x+triplet+loupe&LH_BIN=1&_sop=12&_udhi=80&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=uv+flashlight+365nm+currency&LH_BIN=1&_sop=12&_udhi=40&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=cotton+gloves+inspection&LH_BIN=1&_sop=12&_udhi=25&_ipg=60&fly=supply",
+   "https://www.ebay.com/sch/i.html?_nkw=standard+catalog+world+paper+money&LH_BIN=1&_sop=12&_udhi=120&_ipg=60&fly=supply"
+  ]
+ },
+ "sites": [
+  "https://www.banknoteworld.com/",
+  "https://www.robertsworldmoney.com/",
+  "https://currency.ha.com/ [auction] [dream]"
+ ],
+ "poll_notes": "Collect up to 25 single, fixed-price banknotes of about $150 or less per site. Keep country, year, denomination, catalogue (Pick/Friedberg) number and grade in the title. Skip lots, bundles, replicas, novelty and gold-foil notes.",
+ "examples": {
+  "good": "Zimbabwe 100 Trillion Dollars 2008 P-91 UNC PMG 66 EPQ",
+  "plain": "Old foreign paper money",
+  "reject": [
+   "24k Gold Foil 100 Trillion Zimbabwe novelty",
+   "Lot of 50 world banknotes",
+   "1896 Educational Series $1 REPLICA"
+  ],
+  "too_cheap": [
+   [
+    "1896 $1 Educational Series Silver Certificate",
+    19.99
+   ]
+  ],
+  "equipment": {
+   "100 Mylar currency sleeves archival": "holders",
+   "Lighthouse banknote album Vario": "album",
+   "UV flashlight 365nm LED": "uvlight"
+  }
+ }
+}

@@ -1,0 +1,5 @@
+brian2
+numpy
+pandas
+pyarrow
+joblib

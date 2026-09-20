@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MVSCA - the fly's coin cabinet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a1210; --panel:#0f1a17; --panel2:#13211d; --rule:rgba(var(--bronze-rgb),.28);
+  --ink:#ece5d2; --ink2:#b9b6a2; --muted:#7d877d;
+  --bronze:#c08a4a; --gold:#ffd27a; --patina:#5fb89c; --bad:#e0705c;
+  --line-rgb:95,184,156; --bronze-rgb:192,138,74; --gold-rgb:255,210,122; --veil:255,255,255; --shade:0,0,0;
+  --brain1:#10201b; --brain2:#08100e; --tipbg:#050a09;
+  --display:'Cinzel',Georgia,serif; --body:'Spectral',Georgia,serif; --mono:'IBM Plex Mono',Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:
+    radial-gradient(1200px 700px at 30% -10%, rgba(var(--line-rgb),.10), transparent 60%),
+    radial-gradient(900px 600px at 95% 110%, rgba(var(--bronze-rgb),.10), transparent 60%),
+    var(--bg);
+  color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.45; min-height:100vh;
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.wrap{max-width:1500px;margin:0 auto;padding:22px 16px 40px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 28px;padding-bottom:16px;border-bottom:1px solid var(--rule);margin-bottom:18px}
+h1{font-family:var(--display);font-weight:700;letter-spacing:.22em;font-size:clamp(28px,4.2vw,52px);margin:0;line-height:1;color:var(--gold);
+  text-shadow:0 0 28px rgba(var(--gold-rgb),.18)}
+.sub{font-style:italic;color:var(--ink2);margin-top:6px}
+.meta{margin-left:auto;display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;font-family:var(--mono);font-size:13px;color:var(--ink2)}
+.meta b{display:block;color:var(--ink);font-weight:500;font-size:16px}
+.pill{font-family:var(--mono);font-size:12px;letter-spacing:.16em;padding:7px 12px;border:1px solid var(--rule);border-radius:99px;display:flex;gap:8px;align-items:center}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.pill.on i{background:var(--patina);box-shadow:0 0 10px var(--patina);animation:beat 1.6s infinite}
+.pill.busy i{background:var(--gold);box-shadow:0 0 12px var(--gold);animation:beat .7s infinite}
+.pill.off i{background:var(--bad)}
+@keyframes beat{50%{opacity:.35}}
+.grid{display:grid;gap:16px;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+.row3{display:grid;gap:16px;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:16px}
+.row2{display:grid;gap:16px;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);margin-top:16px}
+@media(max-width:1000px){.grid,.row3,.row2{grid-template-columns:minmax(0,1fr)}.meta{margin-left:0}}
+.panel{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--rule);border-radius:6px;padding:16px;position:relative;
+  box-shadow:inset 0 1px 0 rgba(var(--veil),.03),0 18px 40px rgba(var(--shade),.35);animation:rise .7s both}
+.panel:nth-child(2){animation-delay:.08s}.row3 .panel:nth-child(1){animation-delay:.16s}.row3 .panel:nth-child(2){animation-delay:.24s}.row3 .panel:nth-child(3){animation-delay:.32s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+h2{font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--bronze);margin:0 0 12px;display:flex;align-items:center;gap:12px}
+h2::after{content:"";flex:1;height:1px;background:var(--rule)}
+.brainbox{position:relative;border-radius:4px;overflow:hidden;background:radial-gradient(closest-side,var(--brain1),var(--brain2))}
+#brain{display:block;width:100%;aspect-ratio:16/10}
+.hud{position:absolute;left:14px;right:14px;pointer-events:none;font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.hud.top{top:12px}.hud.bot{bottom:12px;display:flex;align-items:flex-end;gap:18px}
+.tag{display:inline-block;letter-spacing:.18em;font-size:11px;padding:3px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--gold);background:rgba(var(--shade),.35)}
+.tag.replay{color:var(--ink2)}
+#judging{margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--ink);font-family:var(--body);font-size:15px;max-width:70%;text-shadow:0 1px 6px rgb(var(--shade))}
+.hz{font-family:var(--display);font-size:clamp(34px,5vw,60px);line-height:.9;color:var(--gold);text-shadow:0 0 22px rgba(var(--gold-rgb),.35)}
+.hz small{font-family:var(--mono);font-size:12px;color:var(--ink2);letter-spacing:.1em;display:block;margin-top:6px;text-shadow:none}
+#replayLabel{margin-left:auto;max-width:30%;text-align:right;font-family:var(--body);font-size:14px;color:var(--ink2);text-shadow:0 1px 6px rgb(var(--shade))}
+#raster{display:block;width:100%;height:30px;margin-top:8px}
+.note{font-size:13px;color:var(--muted);font-style:italic;margin:8px 0 0}
+.budget{height:12px;border-radius:99px;background:rgba(var(--veil),.06);display:flex;gap:2px;overflow:hidden;margin:4px 0 6px}
+.budget span{height:100%;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.b-coin{background:var(--bronze);border-radius:99px}.b-sup{background:var(--patina);border-radius:99px}
+.budgetline{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12.5px;color:var(--ink2);margin-bottom:12px;gap:10px;flex-wrap:wrap}
+.budgetline b{color:var(--ink);font-weight:500}
+.key{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:baseline}
+.list{list-style:none;margin:0;padding:0;max-height:430px;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+.list li{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:4px 10px;padding:9px 2px;border-top:1px solid rgba(var(--veil),.05);align-items:baseline}
+.list li.new{animation:strike 2.4s ease-out}
+@keyframes strike{0%{background:rgba(var(--gold-rgb),.28)}100%{background:transparent}}
+.num{font-family:var(--display);color:var(--bronze);font-size:13px}
+.list a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--rule)}
+.list a:hover,.list a:focus-visible{color:var(--gold);border-color:var(--gold);outline:none}
+.t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.s{grid-column:2;font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;gap:10px;align-items:center}
+.bar{flex:1;max-width:140px;height:4px;border-radius:4px;background:rgba(var(--veil),.07)}
+.bar i{display:block;height:100%;border-radius:4px;background:var(--gold)}
+.p{font-family:var(--mono);font-size:13px;color:var(--ink);text-align:right}
+.sect{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--muted);margin:14px 0 2px;text-transform:uppercase}
+.list li.empty{display:block;color:var(--muted);font-style:italic;padding:10px 2px}
+.list li.sect{display:block;border-top:0}
+svg text{font-family:var(--mono);font-size:10px;fill:var(--muted)}
+#tip{position:fixed;z-index:9;pointer-events:none;background:var(--tipbg);border:1px solid var(--rule);border-radius:4px;padding:8px 10px;font-size:13px;max-width:280px;display:none;box-shadow:0 8px 24px rgba(var(--shade),.5)}
+#tip b{font-family:var(--mono);font-weight:500;color:var(--gold);display:block;margin-top:3px;font-size:12px}
+.legend{display:flex;gap:16px;font-family:var(--mono);font-size:11.5px;color:var(--ink2);margin-top:6px}
+.legend svg{vertical-align:-3px;margin-right:5px}
+#feed{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto;font-family:var(--mono);font-size:12px;scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+#feed li{padding:5px 0 5px 14px;border-left:2px solid var(--muted);margin-bottom:4px;color:var(--ink2);overflow-wrap:anywhere}
+#feed li time{color:var(--muted);margin-right:8px}
+#feed li.swap{border-color:var(--bronze);color:var(--ink)}#feed li.brain{border-color:var(--gold)}#feed li.poll{border-color:var(--patina)}#feed li.gone,#feed li.error{border-color:var(--bad);color:var(--ink)}
+#feed li.fresh{animation:strike 2.4s ease-out}
+.search{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+#searchBtn{font-family:var(--display);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--bg);background:var(--gold);
+  border:0;border-radius:3px;padding:11px 18px;min-height:40px;cursor:pointer;box-shadow:0 0 0 1px rgba(var(--gold-rgb),.4),0 6px 22px rgba(var(--gold-rgb),.18);transition:transform .15s,box-shadow .15s}
+#searchBtn:hover{transform:translateY(-1px);box-shadow:0 0 0 1px var(--gold),0 10px 28px rgba(var(--gold-rgb),.3)}
+#searchBtn:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+#searchBtn:disabled{background:transparent;color:var(--gold);cursor:progress;transform:none;box-shadow:0 0 0 1px var(--rule)}
+#searchNote{font-family:var(--mono);font-size:11px;color:var(--muted);max-width:260px;line-height:1.35}
+.kind{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--patina);border:1px solid rgba(var(--line-rgb),.35);border-radius:3px;padding:0 5px}
+.missing{font-family:var(--mono);font-size:12px;color:var(--muted);margin:10px 0 0}
+.b-dream{color:var(--gold)}
+.skins{display:flex;gap:7px;align-items:center}
+.skins button{width:24px;height:24px;border-radius:50%;border:1px solid var(--rule);padding:0;cursor:pointer;position:relative;outline-offset:3px}
+.skins button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--gold)}
+.skins button:focus-visible{outline:2px solid var(--ink)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1 id="h1">MVSCA</h1>
+      <div class="sub" id="sub">one fruit fly brain, six days, $500 of coins, $500 of kit, and a dream list with no limit</div>
+    </div>
+    <div class="meta">
+      <div class="search"><button id="searchBtn" type="button">Search now</button><span id="searchNote"></span></div>
+      <div class="skins" id="skins" role="group" aria-label="Dashboard skin"></div>
+      <div class="pill" id="pill"><i></i><span id="pillText">CONNECTING</span></div>
+      <div>time left<b id="left">-</b></div>
+      <div>listings seen<b id="seen">-</b></div>
+      <div>judged by the brain<b id="judged">-</b></div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <section class="panel">
+      <h2>The brain</h2>
+      <div class="brainbox">
+        <canvas id="brain" aria-label="Animated replay of real spikes from the last fly brain simulation"></canvas>
+        <div class="hud top"><span class="tag" id="modeTag">WAITING</span><div id="judging"></div></div>
+        <div class="hud bot">
+          <div class="hz"><span id="hz">-</span><small>MN9 Hz &middot; drive <span id="drive">-</span> Hz</small></div>
+          <div id="replayLabel"></div>
+        </div>
+      </div>
+      <canvas id="raster" aria-hidden="true"></canvas>
+      <p class="note">Every glint is a real spike from the most recent simulation (one of its four 1-second trials, the 300 busiest of ~127,000 neurons, slowed 8&times;). The fine threads are the 700 strongest real synaptic links between those neurons, and the pulses running along them follow real spikes: amber excitatory, blue inhibitory. The strip underneath is MN9, the proboscis motor neuron whose firing rate is the fly's "want". Neuron positions and the outline are stylised, not anatomical. Rings and the sweep around the outline mark collector events, not neural activity.</p>
+    </section>
+
+    <section class="panel">
+      <h2>The cabinet &middot; $<span id="coinBudget">500</span> of <span id="itemsWord">coins</span></h2>
+      <div class="budget" role="img" aria-label="Coin budget used"><span class="b-coin" id="bCoin" style="width:0"></span></div>
+      <div class="budgetline"><span>spent <b id="coinSum">$0</b></span><span><b id="coinCount">0</b> <span id="itemsWord2">coins</span> &middot; <b id="swaps">0</b> swaps so far</span><span>left <b id="coinLeft">-</b></span></div>
+      <ul class="list" id="cabinet"></ul>
+      <p class="note">Nothing here is final: the whole cabinet is re-picked after every coin the brain judges, so coins are swapped in and out until the six days are up, and picks that sell are dropped. Shopping lists only. Nothing is bought or bid on, and authenticity is not verified.</p>
+    </section>
+  </div>
+
+  <div class="row3">
+    <section class="panel">
+      <h2>The workbench &middot; $<span id="equipBudget">500</span> of kit</h2>
+      <div class="budget" role="img" aria-label="Equipment budget used"><span class="b-sup" id="bSup" style="width:0"></span></div>
+      <div class="budgetline"><span>spent <b id="supSum">$0</b></span><span>left <b id="supLeft">-</b></span></div>
+      <ul class="list" id="equipment"></ul>
+      <p class="missing" id="missing"></p>
+    </section>
+    <section class="panel">
+      <h2>The dream list &middot; no limit</h2>
+      <div class="budgetline"><span>if money were no object <b class="b-dream" id="dreamSum">$0</b></span></div>
+      <ul class="list" id="dream"></ul>
+    </section>
+    <section class="panel">
+      <h2>Next under the lens</h2>
+      <ul class="list" id="queue"></ul>
+      <div class="sect">Auction watchlist (outside the budgets)</div>
+      <ul class="list" id="auctions"></ul>
+    </section>
+  </div>
+
+  <div class="row2">
+    <section class="panel">
+      <h2>What the brain wants</h2>
+      <svg id="scatter" viewBox="0 0 380 230" width="100%" role="img" aria-label="Rubric score versus MN9 firing rate for every judged listing"></svg>
+      <div class="legend">
+        <span><svg width="12" height="12"><circle cx="6" cy="6" r="4" style="fill:var(--bronze)"/></svg>judged</span>
+        <span><svg width="14" height="14"><circle cx="7" cy="7" r="3" style="fill:var(--gold)"/><circle cx="7" cy="7" r="6" fill="none" style="stroke:var(--gold)"/></svg>in the cabinet or on the workbench</span>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>Log</h2>
+      <ul id="feed"></ul>
+    </section>
+  </div>
+</div>
+<div id="tip"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const money = n => '$' + Number(n).toFixed(2);
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---------------------------------------------------------------- skins
+const SKINS = {
+  patina: {label: 'Patina - bronze and verdigris', css: {'--bg': '#0a1210', '--panel': '#0f1a17', '--panel2': '#13211d', '--ink': '#ece5d2', '--ink2': '#b9b6a2', '--muted': '#7d877d',
+      '--bronze': '#c08a4a', '--gold': '#ffd27a', '--patina': '#5fb89c', '--bad': '#e0705c', '--brain1': '#10201b', '--brain2': '#08100e', '--tipbg': '#050a09'},
+    spark: '255,207,112', grn: '127,224,192', inh: '143,208,255', line: '95,184,156', gold: '255,210,122', bronze: '192,138,74', ink: '236,229,210', bad: '224,112,92', veil: '255,255,255', shade: '0,0,0', blend: 'lighter'},
+  marble: {label: 'Marble - a light museum card', css: {'--bg': '#efeade', '--panel': '#f8f5ee', '--panel2': '#fffdf8', '--ink': '#1f1b16', '--ink2': '#4a433a', '--muted': '#7c7264',
+      '--bronze': '#8a5a2b', '--gold': '#8a5d00', '--patina': '#2f7d68', '--bad': '#b3402e', '--brain1': '#fffdf8', '--brain2': '#ebe5d6', '--tipbg': '#fffdf8'},
+    spark: '150,90,0', grn: '20,120,95', inh: '30,90,165', line: '70,60,45', gold: '138,93,0', bronze: '138,90,43', ink: '31,27,22', bad: '179,64,46', veil: '0,0,0', shade: '255,255,255', blend: 'multiply'},
+  terminal: {label: 'Terminal - green phosphor', css: {'--bg': '#020a04', '--panel': '#04120a', '--panel2': '#061a0e', '--ink': '#c8ffd4', '--ink2': '#7fd896', '--muted': '#4f9163',
+      '--bronze': '#39d67a', '--gold': '#7dff9e', '--patina': '#2bd4c4', '--bad': '#ff6b5a', '--brain1': '#04160b', '--brain2': '#010603', '--tipbg': '#010603',
+      '--display': "'IBM Plex Mono',Consolas,monospace", '--body': "'IBM Plex Mono',Consolas,monospace"},
+    spark: '125,255,158', grn: '43,212,196', inh: '255,120,200', line: '60,255,120', gold: '125,255,158', bronze: '57,214,122', ink: '200,255,212', bad: '255,107,90', veil: '120,255,160', shade: '0,0,0', blend: 'lighter'},
+  ember: {label: 'Ember - black and forge orange', css: {'--bg': '#0d0706', '--panel': '#160c0a', '--panel2': '#1d100c', '--ink': '#f6e7dc', '--ink2': '#c9a894', '--muted': '#93705f',
+      '--bronze': '#ff7a3d', '--gold': '#ffb36b', '--patina': '#f2c14e', '--bad': '#ff4d4d', '--brain1': '#1f0f0a', '--brain2': '#080403', '--tipbg': '#080403'},
+    spark: '255,150,80', grn: '255,215,120', inh: '120,170,255', line: '255,110,60', gold: '255,179,107', bronze: '255,122,61', ink: '246,231,220', bad: '255,77,77', veil: '255,255,255', shade: '0,0,0', blend: 'lighter'},
+  abyss: {label: 'Abyss - deep sea bioluminescence', css: {'--bg': '#050914', '--panel': '#0a1122', '--panel2': '#0e1830', '--ink': '#e6f0ff', '--ink2': '#9fb4d6', '--muted': '#6b80a6',
+      '--bronze': '#4da3ff', '--gold': '#7df3ff', '--patina': '#ff7ac8', '--bad': '#ff6b6b', '--brain1': '#0c1a38', '--brain2': '#03060f', '--tipbg': '#03060f'},
+    spark: '125,243,255', grn: '255,122,200', inh: '170,150,255', line: '90,170,255', gold: '125,243,255', bronze: '77,163,255', ink: '230,240,255', bad: '255,107,107', veil: '255,255,255', shade: '0,0,0', blend: 'lighter'},
+};
+let P = SKINS.patina, lastPoints = null;
+function applySkin(name, save) {
+  const sk = SKINS[name] || SKINS.patina, root = document.documentElement.style;
+  for (const k of ['--display', '--body']) root.removeProperty(k);
+  for (const k in sk.css) root.setProperty(k, sk.css[k]);
+  for (const [v, key] of [['--line-rgb', 'line'], ['--bronze-rgb', 'bronze'], ['--gold-rgb', 'gold'], ['--veil', 'veil'], ['--shade', 'shade']]) root.setProperty(v, sk[key]);
+  root.setProperty('--rule', `rgba(${sk.bronze},.28)`);
+  P = {...sk, panel: sk.css['--panel']};
+  for (const b of document.querySelectorAll('#skins button')) b.setAttribute('aria-pressed', String(b.dataset.skin === name));
+  if (save) try { localStorage.setItem('flySkin', name); } catch (e) {}
+  if (typeof makeSprites === 'function' && W) { makeSprites(); renderLayer(); }
+  if (lastPoints) drawScatter(lastPoints);
+}
+for (const name in SKINS) {
+  const b = el('button'); b.type = 'button'; b.dataset.skin = name; b.title = b.ariaLabel = SKINS[name].label;
+  b.style.background = `linear-gradient(135deg, ${SKINS[name].css['--bg']} 50%, ${SKINS[name].css['--gold']} 50%)`;
+  b.addEventListener('click', () => applySkin(name, true)); $('skins').append(b);
+}
+
+// ---------------------------------------------------------------- lists
+function itemRow(l, n, isNew) {
+  const li = el('li', isNew ? 'new' : '');
+  li.append(el('span', 'num', n));
+  const t = el('div', 't');
+  if (/^https?:\/\//.test(l.url || '')) { const a = el('a', '', l.title); a.href = l.url; a.target = '_blank'; a.rel = 'noopener noreferrer'; t.append(a); }
+  else t.textContent = l.title;
+  t.title = l.title;
+  li.append(t, el('span', 'p', money(l.price)));
+  const s = el('div', 's');
+  if (l.equip) s.append(el('span', 'kind', l.equip));
+  s.append(el('span', '', l.seller || ''));
+  if (l.mn9 != null) { const bar = el('span', 'bar'), i = el('i'); i.style.width = Math.min(100, l.mn9) + '%'; bar.append(i); s.append(bar, el('span', '', l.mn9.toFixed(1) + ' Hz')); }
+  else s.append(el('span', '', 'rubric ' + l.desirability.toFixed(2)));
+  if (l.auction) s.append(el('span', '', l.auction));
+  li.append(s);
+  return li;
+}
+let knownPicks = null;
+function fill(ul, items, emptyText, numbered) {
+  ul.replaceChildren(...(items.length ? items.map((l, i) => itemRow(l, numbered ? String(i + 1) : '·', numbered && knownPicks && !knownPicks.has(l.id))) : [el('li', 'empty', emptyText)]));
+}
+
+// ---------------------------------------------------------------- scatter (single series + emphasis ring)
+const NS = 'http://www.w3.org/2000/svg';
+const sv = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+function drawScatter(points) {
+  lastPoints = points;
+  const svg = $('scatter'), L = 34, R = 370, T = 22, B = 196;
+  const ymax = Math.max(100, Math.ceil(Math.max(0, ...points.map(p => p[1])) / 25) * 25);
+  const x = v => L + v * (R - L), y = v => B - v / ymax * (B - T);
+  svg.replaceChildren();
+  for (let g = 0; g <= ymax; g += 25) {
+    svg.append(sv('line', {x1: L, x2: R, y1: y(g), y2: y(g), stroke: `rgba(${P.veil},.07)`}));
+    const t = sv('text', {x: L - 6, y: y(g) + 3, 'text-anchor': 'end'}); t.textContent = g; svg.append(t);
+  }
+  for (const g of [0, .5, 1]) { const t = sv('text', {x: x(g), y: B + 14, 'text-anchor': 'middle'}); t.textContent = g.toFixed(1); svg.append(t); }
+  const xl = sv('text', {x: (L + R) / 2, y: 226, 'text-anchor': 'middle'}); xl.textContent = 'rubric score (how well identified, famous, certified)'; svg.append(xl);
+  const yl = sv('text', {x: 4, y: 10}); yl.textContent = 'MN9 Hz'; svg.append(yl);
+  for (const [d, hz, title, price, picked] of points) {
+    if (picked) svg.append(sv('circle', {cx: x(d), cy: y(hz), r: 6.5, fill: 'none', stroke: `rgb(${P.gold})`, 'stroke-width': 1.2}));
+    svg.append(sv('circle', {cx: x(d), cy: y(hz), r: 4, fill: picked ? `rgb(${P.gold})` : `rgb(${P.bronze})`, stroke: P.panel, 'stroke-width': 2}));
+    const hit = sv('circle', {cx: x(d), cy: y(hz), r: 10, fill: 'transparent'});
+    hit.addEventListener('mousemove', e => { const tip = $('tip'); tip.replaceChildren(document.createTextNode(title), el('b', '', hz.toFixed(1) + ' Hz · rubric ' + d.toFixed(2) + ' · ' + money(price)));
+      tip.style.display = 'block'; tip.style.left = Math.min(innerWidth - 300, e.clientX + 14) + 'px'; tip.style.top = (e.clientY + 14) + 'px'; });
+    hit.addEventListener('mouseleave', () => $('tip').style.display = 'none');
+    svg.append(hit);
+  }
+  if (!points.length) { const t = sv('text', {x: (L + R) / 2, y: 100, 'text-anchor': 'middle'}); t.textContent = 'no listings judged yet'; svg.append(t); }
+}
+
+// ---------------------------------------------------------------- feed
+let lastEvent = null;
+function eventType(text) { return /^cabinet:/.test(text) ? 'swap' : /^brain:/.test(text) ? 'brain' : /^poll:/.test(text) ? 'poll' : /^gone:/.test(text) ? 'gone' : /^ERROR/.test(text) ? 'error' : 'sys'; }
+function drawFeed(events) {
+  const firstLoad = lastEvent === null, newFrom = events.lastIndexOf(lastEvent);
+  const fresh = firstLoad ? [] : events.slice(newFrom + 1);
+  for (const line of fresh) ripple(eventType(line.slice(20)));
+  if (events.length) lastEvent = events[events.length - 1];
+  $('feed').replaceChildren(...events.slice().reverse().map(line => {
+    const text = line.slice(20), li = el('li', eventType(text) + (fresh.includes(line) ? ' fresh' : ''));
+    li.append(el('time', '', line.slice(11, 19)), document.createTextNode(text.replace(/^brain: want=([\d.]+) -> /, 'rubric $1 → ')));
+    return li;
+  }));
+}
+
+// ---------------------------------------------------------------- brain
+const cv = $('brain'), cx2 = cv.getContext('2d'), rs = $('raster'), rx2 = rs.getContext('2d'), layer = document.createElement('canvas');
+let W = 0, H = 0, DPR = 1, shape = null;
+let neurons = [], spikes = [], edges = [], outEdges = [], mn9Times = [], meta = null, glow = new Float32Array(0);
+let playStart = 0, ptr = 0, live = false, ripples = [], bursts = [], pulses = [], thinking = false;
+const REPLAY_MS = 8000, PAUSE_MS = 2500, PULSE_MS = 300, TAU = 6.2832;
+const RIPPLE = {swap: 'bronze', brain: 'gold', poll: 'line', gone: 'bad', error: 'bad', sys: 'ink'};
+function ripple(type) { if (!REDUCED) ripples.push({t0: performance.now(), k: RIPPLE[type] || 'ink'}); }
+
+// one smooth outline (frontal view: central brain, optic lobes either side, SEZ below) instead of separate ellipses
+const HALF = [[.5,.205],[.56,.15],[.64,.13],[.715,.16],[.765,.235],[.82,.175],[.895,.17],[.95,.26],[.972,.42],[.955,.58],[.9,.68],[.835,.7],[.775,.64],[.72,.69],[.65,.735],[.6,.775],[.585,.85],[.555,.915],[.5,.94]];
+const OUTLINE = HALF.concat(HALF.slice(1, -1).reverse().map(([x, y]) => [1 - x, y]));
+function brainPath(sx, sy) {
+  const P = OUTLINE.map(([x, y]) => [x * sx, y * sy]), n = P.length, path = new Path2D();
+  path.moveTo(P[0][0], P[0][1]);
+  for (let i = 0; i < n; i++) {
+    const p0 = P[(i - 1 + n) % n], p1 = P[i], p2 = P[(i + 1) % n], p3 = P[(i + 2) % n];
+    path.bezierCurveTo(p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6, p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6, p2[0], p2[1]);
+  }
+  path.closePath(); return path;
+}
+const probe = document.createElement('canvas').getContext('2d'), unitPath = brainPath(1000, 1000);
+const inside = (x, y) => probe.isPointInPath(unitPath, x * 1000, y * 1000);
+
+function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const BOXES = {c: [.27, .73, .16, .76], l: [.04, .23, .18, .70], r: [.77, .96, .18, .70], s: [.505, .585, .80, .90]};
+function place(id, box) {
+  const r = rng(hash(id)), [x0, x1, y0, y1] = BOXES[box], m = .014;
+  for (let i = 0; i < 80; i++) { const x = x0 + r() * (x1 - x0), y = y0 + r() * (y1 - y0); if (inside(x, y) && inside(x + m, y) && inside(x - m, y) && inside(x, y + m) && inside(x, y - m)) return [x, y]; }
+  return [(x0 + x1) / 2, (y0 + y1) / 2];
+}
+const sprite = rgb => { const c = document.createElement('canvas'); c.width = c.height = 48; const g = c.getContext('2d'), gr = g.createRadialGradient(24, 24, 0, 24, 24, 24);
+  gr.addColorStop(0, `rgba(${rgb},.9)`); gr.addColorStop(.18, `rgba(${rgb},.35)`); gr.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = gr; g.fillRect(0, 0, 48, 48); return c; };
+let SPR = {};
+function makeSprites() { SPR = {n: sprite(P.spark), grn: sprite(P.grn), mn9: sprite(P.gold)}; }
+
+function loadSpikes(d, isLive) {
+  meta = d; spikes = d.spikes; const grn = new Set(d.grn);
+  neurons = d.ids.map((id, i) => {
+    if (i === d.mn9_idx) return {p: [.5, .885], kind: 'mn9'};
+    if (grn.has(i)) return {p: place(id, 's'), kind: 'grn'};
+    const u = rng(hash(id) ^ 0x9e3779b9)(); return {p: place(id, u < .7 ? 'c' : u < .85 ? 'l' : 'r'), kind: 'n'};
+  });
+  edges = (d.edges || []).filter(e => e[0] !== e[1]).map(([a, b, w]) => {
+    const pa = neurons[a].p, pb = neurons[b].p, bend = (hash(d.ids[a] + d.ids[b]) % 2 ? 1 : -1) * .16;
+    return {a, b, inh: w < 0, c: [(pa[0] + pb[0]) / 2 - (pb[1] - pa[1]) * bend, (pa[1] + pb[1]) / 2 + (pb[0] - pa[0]) * bend]};
+  });
+  outEdges = neurons.map(() => []); edges.forEach((e, i) => outEdges[e.a].push(i));
+  glow = new Float32Array(neurons.length); pulses = [];
+  mn9Times = spikes.filter(s => s[1] === d.mn9_idx).map(s => s[0]);
+  live = isLive; playStart = performance.now(); ptr = 0;
+  $('hz').textContent = d.mn9.toFixed(1); $('drive').textContent = d.r_poi; $('replayLabel').textContent = d.label;
+  renderLayer();
+}
+const onCurve = (e, t) => { const pa = neurons[e.a].p, pb = neurons[e.b].p, u = 1 - t; return [(u * u * pa[0] + 2 * u * t * e.c[0] + t * t * pb[0]) * W, (u * u * pa[1] + 2 * u * t * e.c[1] + t * t * pb[1]) * H]; };
+
+function renderLayer() {  // everything that does not move: outline, inner contour, midline, synaptic threads
+  layer.width = Math.max(1, W * DPR); layer.height = Math.max(1, H * DPR);
+  const L = layer.getContext('2d'); L.setTransform(DPR, 0, 0, DPR, 0, 0);
+  const fill = L.createLinearGradient(0, 0, 0, H); fill.addColorStop(0, `rgba(${P.line},.10)`); fill.addColorStop(1, `rgba(${P.line},.02)`);
+  L.fillStyle = fill; L.shadowColor = `rgba(${P.line},.35)`; L.shadowBlur = 26; L.fill(shape); L.shadowBlur = 0;
+  L.strokeStyle = `rgba(${P.line},.5)`; L.lineWidth = 1; L.stroke(shape);
+  L.save(); L.translate(W / 2, H * .53); L.scale(.93, .93); L.translate(-W / 2, -H * .53); L.strokeStyle = `rgba(${P.line},.10)`; L.stroke(shape); L.restore();
+  L.strokeStyle = `rgba(${P.ink},.06)`; L.beginPath(); L.moveTo(W / 2, H * .24); L.lineTo(W / 2, H * .76); L.stroke();
+  L.lineWidth = .6;
+  for (const e of edges) { const pa = neurons[e.a].p, pb = neurons[e.b].p; L.strokeStyle = e.inh ? `rgba(${P.inh},.07)` : `rgba(${P.spark},.07)`;
+    L.beginPath(); L.moveTo(pa[0] * W, pa[1] * H); L.quadraticCurveTo(e.c[0] * W, e.c[1] * H, pb[0] * W, pb[1] * H); L.stroke(); }
+}
+function resize() {
+  DPR = Math.min(2, devicePixelRatio || 1);
+  for (const [c, x] of [[cv, cx2], [rs, rx2]]) { const b = c.getBoundingClientRect(); c.width = b.width * DPR; c.height = b.height * DPR; x.setTransform(DPR, 0, 0, DPR, 0, 0); }
+  W = cv.getBoundingClientRect().width; H = cv.getBoundingClientRect().height; shape = brainPath(W, H); renderLayer();
+}
+let lastFrame = performance.now();
+function frame(now) {
+  const dt = now - lastFrame; lastFrame = now;
+  cx2.clearRect(0, 0, W, H);
+  cx2.drawImage(layer, 0, 0, W, H);
+  if (thinking && !REDUCED) { cx2.save(); cx2.setLineDash([90, 5000]); cx2.lineDashOffset = -(now / 5) % 5090; cx2.strokeStyle = `rgba(${P.gold},.85)`; cx2.lineWidth = 1.6; cx2.shadowColor = `rgba(${P.gold},.8)`; cx2.shadowBlur = 8; cx2.stroke(shape); cx2.restore(); }
+  ripples = ripples.filter(r => now - r.t0 < 1800);
+  for (const r of ripples) { const k = (now - r.t0) / 1800, sc = 1 + k * .12; cx2.save(); cx2.translate(W / 2, H * .53); cx2.scale(sc, sc); cx2.translate(-W / 2, -H * .53);
+    cx2.strokeStyle = `rgba(${P[r.k]},${(1 - k) * .6})`; cx2.lineWidth = 1.4 / sc; cx2.stroke(shape); cx2.restore(); }
+
+  let sim = -1;
+  if (meta) {
+    let e = now - playStart;
+    if (e > REPLAY_MS + PAUSE_MS) { if (REDUCED) e = REPLAY_MS; else { playStart = now; ptr = 0; live = false; e = 0; } }
+    sim = Math.min(1000, e / REPLAY_MS * 1000);
+    while (ptr < spikes.length && spikes[ptr][0] <= sim) {
+      const i = spikes[ptr++][1]; glow[i] = 1; if (i === meta.mn9_idx) bursts.push({t0: now});
+      const oe = outEdges[i] || []; for (let k = 0; k < Math.min(3, oe.length) && pulses.length < 170; k++) pulses.push({e: edges[oe[(ptr + k) % oe.length]], t0: now});
+    }
+    $('modeTag').textContent = live ? 'LIVE \u00b7 NEW EVALUATION' : 'REPLAY \u00b7 LAST EVALUATION'; $('modeTag').className = 'tag' + (live ? '' : ' replay');
+  }
+  const decay = Math.exp(-dt / 110), gain = live ? 1 : .65;
+  cx2.globalCompositeOperation = P.blend; cx2.lineCap = 'round';
+  pulses = pulses.filter(p => now - p.t0 < PULSE_MS);
+  for (const p of pulses) { const k = (now - p.t0) / PULSE_MS, a = onCurve(p.e, Math.max(0, k - .13)), b = onCurve(p.e, k);
+    cx2.strokeStyle = `rgba(${p.e.inh ? P.inh : P.spark},${(.25 + .6 * (1 - k)) * gain})`; cx2.lineWidth = 1.1; cx2.beginPath(); cx2.moveTo(a[0], a[1]); cx2.lineTo(b[0], b[1]); cx2.stroke(); }
+  neurons.forEach((n, i) => {
+    const x = n.p[0] * W, y = n.p[1] * H, g = glow[i] * gain; glow[i] *= decay;
+    if (n.kind === 'mn9') return;
+    cx2.fillStyle = n.kind === 'grn' ? `rgba(${P.grn},${.45 + g * .55})` : `rgba(${P.spark},${.3 + g * .7})`;
+    const sz = 1.3 + g * 1.4; cx2.fillRect(x - sz / 2, y - sz / 2, sz, sz);
+    if (g > .04) { const R = n.kind === 'grn' ? 9 : 8; cx2.globalAlpha = g; cx2.drawImage(SPR[n.kind], x - R, y - R, R * 2, R * 2); cx2.globalAlpha = 1; }
+  });
+  cx2.globalCompositeOperation = 'source-over';
+  if (meta) {  // MN9 as a reticle rather than a blob
+    const x = .5 * W, y = .885 * H, g = glow[meta.mn9_idx] * gain;
+    cx2.strokeStyle = `rgba(${P.gold},${.55 + g * .45})`; cx2.lineWidth = 1; cx2.beginPath(); cx2.arc(x, y, 7, 0, TAU); cx2.stroke();
+    cx2.beginPath(); for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { cx2.moveTo(x + dx * 10, y + dy * 10); cx2.lineTo(x + dx * 14, y + dy * 14); } cx2.stroke();
+    if (g > .04) { cx2.globalCompositeOperation = P.blend; cx2.globalAlpha = g; cx2.drawImage(SPR.mn9, x - 16, y - 16, 32, 32); cx2.globalAlpha = 1; cx2.globalCompositeOperation = 'source-over'; }
+    bursts = bursts.filter(b => now - b.t0 < 600);
+    for (const b of bursts) { const k = (now - b.t0) / 600; cx2.strokeStyle = `rgba(${P.gold},${(1 - k) * .7 * gain})`; cx2.lineWidth = 1; cx2.beginPath(); cx2.arc(x, y, 7 + k * 24, 0, TAU); cx2.stroke(); }
+    cx2.font = '10px IBM Plex Mono, monospace'; cx2.textAlign = 'left'; cx2.fillStyle = `rgba(${P.ink},.8)`; cx2.fillText('MN9', x + 20, y + 3);
+    cx2.fillStyle = `rgba(${P.grn},.8)`; cx2.fillText('sugar GRNs', .6 * W, .835 * H);
+    cx2.strokeStyle = `rgba(${P.grn},.35)`; cx2.beginPath(); cx2.moveTo(.6 * W - 4, .835 * H - 3); cx2.lineTo(.585 * W, .845 * H); cx2.stroke();
+  }
+
+  const rw = rs.getBoundingClientRect().width, rh = 30;
+  rx2.clearRect(0, 0, rw, rh); rx2.fillStyle = `rgba(${P.veil},.05)`; rx2.fillRect(0, rh / 2, rw, 1);
+  if (sim >= 0) { rx2.fillStyle = `rgb(${P.gold})`; for (const t of mn9Times) { if (t > sim) break; rx2.fillRect(t / 1000 * rw, 5, 1.5, rh - 10); }
+    rx2.fillStyle = `rgba(${P.ink},.6)`; rx2.fillRect(sim / 1000 * rw, 0, 1, rh); }
+  requestAnimationFrame(frame);
+}
+
+// ---------------------------------------------------------------- polling
+let spikeStamp = -1, wasPending = false;
+const sum = a => a.reduce((s, l) => s + l.price, 0);
+function searchUI(pending) {
+  const b = $('searchBtn'); b.disabled = pending; b.textContent = pending ? 'Search requested\u2026' : 'Search now';
+  if (pending) $('searchNote').textContent = 'Waiting for Claude to pick it up: about a minute while the Claude session that built this page is open, otherwise at the next 3-hourly poll.';
+  else if (wasPending) { $('searchNote').textContent = 'Search started ' + new Date().toLocaleTimeString() + '. New listings appear here as they are read.'; ripple('poll'); }
+  wasPending = pending;
+}
+$('searchBtn').addEventListener('click', async () => {
+  try { const r = await fetch('/search', {method: 'POST'}); if (!r.ok) throw 0; searchUI(true); }
+  catch (e) { $('searchNote').textContent = 'Could not reach the dashboard server.'; }
+});
+async function tick() {
+  try {
+    const d = await (await fetch('/api', {cache: 'no-store'})).json();
+    if (d.theme) { $('h1').textContent = d.theme.title; $('sub').textContent = d.theme.subtitle; document.title = d.theme.title + ' - ' + d.theme.name;
+      $('itemsWord').textContent = $('itemsWord2').textContent = d.theme.items; }
+    const pill = $('pill'), state = d.stopped ? ['off', 'STOPPED'] : !d.alive ? ['off', 'COLLECTOR OFFLINE'] : d.current ? ['busy', 'BRAIN RUNNING'] : ['on', 'WATCHING'];
+    pill.className = 'pill ' + state[0]; $('pillText').textContent = state[1];
+    thinking = d.alive && !!d.current;
+    $('judging').textContent = thinking ? 'Judging now: ' + d.current : d.alive ? 'Idle - waiting for new listings' : '';
+    const left = Math.max(0, d.deadline - d.now); $('left').textContent = d.deadline ? `${Math.floor(left / 86400)}d ${Math.floor(left % 86400 / 3600)}h ${Math.floor(left % 3600 / 60)}m` : '-';
+    $('seen').textContent = d.seen; $('judged').textContent = d.evaluated + (d.seen - d.evaluated ? ` (+${d.seen - d.evaluated} queued)` : '');
+    const c = sum(d.coins), s = sum(d.supplies);
+    $('bCoin').style.width = Math.min(100, c / d.coin_budget * 100) + '%'; $('bSup').style.width = Math.min(100, s / d.equip_budget * 100) + '%';
+    $('coinBudget').textContent = d.coin_budget; $('equipBudget').textContent = d.equip_budget;
+    $('coinSum').textContent = money(c); $('coinLeft').textContent = money(d.coin_budget - c); $('coinCount').textContent = d.coins.length; $('swaps').textContent = d.swaps;
+    $('supSum').textContent = money(s); $('supLeft').textContent = money(d.equip_budget - s); $('dreamSum').textContent = money(sum(d.dream));
+    fill($('cabinet'), d.coins, 'The cabinet is empty so far.', true);
+    fill($('equipment'), d.supplies, 'Nothing on the workbench yet.', true);
+    const missing = (d.equip_kinds || []).filter(k => !d.supplies.some(l => l.equip === k));
+    $('missing').textContent = missing.length ? 'Still looking for: ' + missing.join(', ') : 'One of everything found.';
+    fill($('dream'), d.dream, 'No dreams yet.');
+    knownPicks = new Set([...d.coins, ...d.supplies].map(l => l.id));
+    fill($('queue'), d.queue, 'Nothing waiting. The next search will bring more.');
+    fill($('auctions'), d.auctions, 'No auction lots yet.');
+    drawScatter(d.points); drawFeed(d.events); searchUI(d.search_pending);
+    if (d.spike_stamp && d.spike_stamp !== spikeStamp) { const first = spikeStamp === -1; spikeStamp = d.spike_stamp; loadSpikes(await (await fetch('/spikes', {cache: 'no-store'})).json(), !first); }
+  } catch (e) { $('pill').className = 'pill off'; $('pillText').textContent = 'DASHBOARD SERVER UNREACHABLE'; }
+}
+let savedSkin = 'patina'; try { savedSkin = localStorage.getItem('flySkin') || 'patina'; } catch (e) {}
+applySkin(savedSkin); makeSprites();
+addEventListener('resize', resize); resize(); requestAnimationFrame(frame); tick(); setInterval(tick, 4000);
+</script>
+</body>
+</html>
