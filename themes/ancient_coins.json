@@ -108,7 +108,7 @@
    ]
   ],
   "prestige_default": 0.2,
-  "exclude": "not authentic|plated|cuff ?links?|coin pack|replica|\\bcopy\\b|reproduction|\\bfake|souvenir|token|restrike|fantasy|novelty|\\blots?\\b|\\bcoins\\b|\\bpcs\\b|random|per order|you choose|you pick|uncleaned|arrowhead|\\bring\\b|pendant|necklace|jewelry|\\bbook\\b|medieval|byzantine",
+  "exclude": "not authentic|plated|cuff ?links?|coin pack|replica|\\bcopy\\b|reproduction|\\bfake|souvenir|token|restrike|fantasy|novelty|\\blots?\\b|\\bcoins\\b|\\bpcs\\b|random|per order|you choose|you pick|uncleaned|arrowhead|\\bring\\b|pendant|necklace|jewelry|\\bbook\\b|medieval|byzantine|byzantin|nummi(um|a)?\\b|justinian|heraclius|histamenon|nomisma\\b|hyperpyron|comnen|parthia|sasanian|sassanian|celtic|kushan|sunga|karshapana|indo-|islamic|umayyad|abbasid|chinese|china\\b|india\\b|axum|crusader|\\bweight\\b|\\bseal\\b|fibula|antiquit",
   "too_cheap": [
    {
     "match": "\\b(dekadrachm|decadrachm)\\b",
@@ -209,10 +209,13 @@
    "https://www.ebay.com/sch/i.html?_nkw=coin+tray+velvet+display+case&LH_BIN=1&_sop=12&_udhi=120&_ipg=60&fly=supply",
    "https://www.ebay.com/sch/i.html?_nkw=sear+roman+coins+and+their+values+book&LH_BIN=1&_sop=12&_udhi=120&_ipg=60&fly=supply",
    "https://www.ebay.com/sch/i.html?_nkw=wooden+coin+cabinet+trays&LH_BIN=1&_sop=12&_udhi=450&_ipg=60&fly=supply"
+  ],
+  "vcoins": [
+   "https://www.vcoins.com/en/Search.aspx?search=true&searchQuery=&searchQueryExclude=&searchCategory=0&searchCategoryLevel=2&searchCategoryAncient=True&searchCategoryUs=False&searchCategoryWorld=False&searchCategoryMints=False&searchBetween=10&searchBetweenAnd=150&searchDate=<DATE>&searchUseThesaurus=True&searchDisplayCurrency=USD&searchDisplay=1&searchIdStore=0&searchQueryAnyWords=&searchExactPhrase=&searchTitleAndDescription=True&searchDateType=2&searchMaxRecords=100&SearchOnSale=False&Unassigned=False",
+   "https://www.vcoins.com/en/Search.aspx?search=true&searchQuery=&searchQueryExclude=&searchCategory=0&searchCategoryLevel=2&searchCategoryAncient=True&searchCategoryUs=False&searchCategoryWorld=False&searchCategoryMints=False&searchBetween=2000&searchBetweenAnd=500000&searchDate=<DATE>&searchUseThesaurus=True&searchDisplayCurrency=USD&searchDisplay=1&searchIdStore=0&searchQueryAnyWords=&searchExactPhrase=&searchTitleAndDescription=True&searchDateType=2&searchMaxRecords=100&SearchOnSale=False&Unassigned=False"
   ]
  },
  "sites": [
-  "https://www.vcoins.com/  # ancient coins section",
   "https://www.forumancientcoins.com/",
   "https://www.ma-shops.com/  # search ancient Roman / Greek",
   "https://www.biddr.com/ [auction]",
@@ -226,7 +229,9 @@
   "reject": [
    "Ancient Greek Coin Drachm Pamphylia NOT AUTHENTIC",
    "1 Original ancient Roman coin Random from lot",
-   "Ancient Roman Marcus Aurelius Aureus 168 AD Rome Gold Plated Coin Cufflinks"
+   "Ancient Roman Marcus Aurelius Aureus 168 AD Rome Gold Plated Coin Cufflinks",
+   "Isaac I Comnenus. 1057-1059. AV Histamenon Nomisma. Constantinople mint.",
+   "Sunga empire Ujjain Dynasty 1/8 karshapana"
   ],
   "too_cheap": [
    [

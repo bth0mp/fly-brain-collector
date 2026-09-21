@@ -6,7 +6,7 @@ Scientists mapped every neuron and connection in a real fruit fly's brain (the
 [FlyWire connectome](https://flywire.ai/)), and [Shiu et al. (Nature, 2024)](https://www.nature.com/articles/s41586-024-07763-9)
 turned that wiring into a runnable spiking model. This project runs that model on your PC and lets it "shop":
 
-1. Claude reads listings for you in a browser (eBay plus any dealer sites you add) and drops them in an inbox folder.
+1. Claude reads listings for you in a browser (eBay, the VCoins marketplace for the ancient coins theme, plus any dealer sites you add) and drops them in an inbox folder.
 2. Each listing's title gets a plain-text score: how well it is identified, how famous it is, whether it is certified, how prestigious the type is.
 3. The score sets how hard the fly's **sugar-tasting neurons** are stimulated. The whole brain (~127,000 neurons) then runs for one simulated second.
 4. We read one neuron at the end of the chain: **MN9**, the motor neuron that makes a fly stick out its proboscis to eat. The faster it fires, the more the fly "wants" the item.
@@ -96,7 +96,7 @@ Then leave it alone for the week. `python fly_collector.py status` prints the cu
 
 | When | What happens |
 |---|---|
-| Every 3 hours (or when you press **Search now**) | Claude opens the theme's eBay searches and a rotating few of its other sites in a browser, and writes what it finds as small JSON files into `collector/<theme>/inbox/`. It also checks whether the fly's current picks are still for sale. |
+| Every 3 hours (or when you press **Search now**) | Claude opens the theme's eBay searches, its VCoins searches if it has any, and a rotating few of its other sites in a browser, and writes what it finds as small JSON files into `collector/<theme>/inbox/`. It also checks whether the fly's current picks are still for sale. |
 | Continuously | The collector picks up inbox files, throws out anything the theme's rules reject (replicas, lots, things priced too low to be real), scores the rest from their titles, and queues them best-looking first. |
 | About every 75 seconds | One listing goes through the brain: its score becomes sugar-neuron stimulation, the ~127,000-neuron model runs for four one-second trials, and MN9's firing rate becomes that listing's "want". |
 | After every judgement | All three lists are rebuilt: the best set of items that fits the budget (a knapsack over "want"), one of each kind of equipment within the equipment budget, and the top of everything for the dream list. Anything that entered or left is logged as a swap. |
@@ -110,7 +110,7 @@ state under `collector/<theme>/`. Delete that theme's `state.json` for a fresh r
 A theme is one JSON file in `themes/`: budgets, the scoring rules (regexes for what identifies an item, a fame table, certification,
 prestige tiers, words that reject a listing, and "too cheap to be real" rules), equipment categories, eBay searches, other sites to
 visit, and a few example titles that `demo` checks. Copy one, edit it, and run `python fly_collector.py demo` to validate it.
-Add your own dealer sites to the theme's `sites` list; tags are `[auction]` (watchlist only, never in the budget), `[dream]`
+A theme can also list VCoins search URLs under `searches.vcoins` (put `<DATE>` where the "newer than" date goes; see `ancient_coins.json`). Add your own dealer sites to the theme's `sites` list; tags are `[auction]` (watchlist only, never in the budget), `[dream]`
 (no price cap) and `[supply]` (equipment). After changing a theme, run `instructions` again so Claude's instructions match.
 
 ## Troubleshooting

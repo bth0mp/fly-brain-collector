@@ -470,6 +470,11 @@ def instructions():
     OUT.mkdir(parents=True, exist_ok=True)
     s, py, me = THEME['searches'], sys.executable, Path(__file__).resolve()
     bullets = lambda urls: '\n'.join(f'   - {u}' for u in urls) or '   - (none for this theme)'
+    vcoins = '' if not s.get('vcoins') else f"""2b. VCoins (every run). Read `{HERE / 'browser_vcoins.js'}`. For each URL below, first replace `<DATE>` with the date three
+   days before today written as `M%2fD%2fYYYY` (for example `9%2f18%2f2026`), then navigate, run the script with the browser's
+   javascript tool, and if `rows` is non-empty save the returned JSON text exactly as `INBOX/vcoins-<n>-<yyyymmdd-hhmm>.json`.
+{bullets(s['vcoins'])}
+"""
     sites = '\n'.join(f'   - {x}' for x in THEME.get('sites', [])) or '   - (none - add your own to the theme file)'
     POLL_MD.write_text(f"""# Browser poll: feed the fly-brain collector ({THEME['name']})
 
@@ -493,7 +498,7 @@ INBOX = `{INBOX}`
 {bullets(s.get('items', []) + s.get('dream', []))}
    Equipment - only the next 3 per run, rotating with the index in `{OUT / 'equip_cursor.txt'}` (0 if missing; wrap; write it back):
 {bullets(s.get('equipment', []))}
-3. Other sites - the next 5 per run, rotating with the index in `{OUT / 'site_cursor.txt'}` (0 if missing; wrap; write it back).
+{vcoins}3. Other sites - the next 5 per run, rotating with the index in `{OUT / 'site_cursor.txt'}` (0 if missing; wrap; write it back).
    Each line is a URL, optional [tags], and an optional hint after `#`. If a site is down or has nothing suitable, skip it.
 {sites}
    {THEME['poll_notes']}
